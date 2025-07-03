@@ -1,17 +1,19 @@
 const express = require('express')
+// const cors = require('cors')
 const app = express()
-const CustomError = require('./errors/CustomError')
 
 const userRouter = require('./routes/userRouter')
 const blogPostRouter = require('./routes/blogPostRouter')
 const commentRouter = require('./routes/commentRouter')
 
-// Used for POST and PUT requests only
-app.use(express.urlencoded({ extended: true }))
-
 // App middleware
 
-// Express session?
+// Use Cors and json to access API from different origins - need to look into this
+// app.use(cors())
+app.use(express.json())
+
+// Used for POST and PUT requests only
+app.use(express.urlencoded({ extended: true }))
 
 // User available in all views
 app.use((req, res, next) => {
@@ -22,25 +24,6 @@ app.use((req, res, next) => {
 app.use('/', userRouter)
 app.use('/blogPost', blogPostRouter)
 app.use('/comment', commentRouter)
-
-// Catches any final errors - must be at end
-app.use((req, res, next) => {
-  next(new CustomError('Page not found.', 404))
-})
-
-app.use((err, req, res, next) => {
-  console.error(err)
-  if (err instanceof CustomError) {
-    return res.status(err.statusCode).render('error', {
-      message: err.message,
-      error: process.env.NODE_ENV === 'development' ? err : null
-    })
-  }
-  res.status(err.statusCode || 500).render('error', {
-    message: err.message || 'Something broke!',
-    error: process.env.NODE_ENV === 'development' ? err : null
-  })
-})
 
 // Normally at end - but can sit anywhere
 app.listen(process.env.PORT, '0.0.0.0', () => {
