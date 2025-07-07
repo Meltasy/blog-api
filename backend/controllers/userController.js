@@ -1,47 +1,72 @@
 const jwt = require('jsonwebtoken')
-// const { PrismaClient } = require('@prisma/client')
-// const prisma = new PrismaClient()
-// const bcryptjs = require('bcryptjs')
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
+const bcryptjs = require('bcryptjs')
 
-const getUserHome = function(req, res) {
-  res.json({
-    message: 'User: Is this working?'
-  })
-}
-
-// JWT can be done synchronously or asynchronously
-const loginUser = function(req, res) {
-  const user = {
-    id: 1,
-    username: 'Brad Pitt',
-    email: 'b.pitt@gmail.com'
-  }
-  // Because {user: user} is the same, you can just do {user}
-  jwt.sign({user}, process.env.JWT_SECRET, { expiresIn: '30s' }, (err, token) => {
-    res.json({
-      token
+const newUser = async (req, res) => {
+  const { username, email, password } = req.body
+  try {
+    const hashPword = await bcryptjs.hash(password, 10)
+    const user = await prisma.user.create({
+      data: { username, email, password: hashPword }
     })
-  })
+    res.status(201).json({
+      message: 'New user created.',
+      user: { id: user.id, username: user.username }
+    })
+  } catch (err) {
+    console.error('Error adding new user:', err)
+    if (err.code === 'P2002') {
+      return res.status(400).json({ error: 'This username or email already exsists.' })
+    }
+    res.status(500).json({ error: 'Failed to create user.' })
+  }
 }
 
-const createPost = function(req, res) {
-  jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
-    if(err) {
-      res.sendStatus(403)
-      // res.json({
-      //   message: '403 error: Forbidden - bearerHeader not authorized'
-      // })
-    } else {
-      res.json({
-        message: 'User: Post created ...',
-        authData
-      })
+const login = async (req, res) => {
+  const { username, password } = req.body
+  try {
+    const user = await prisma.user.findUnique({
+      where: { username }
+    })
+    if (!user) {
+      return res.status(401).json({ error: 'The username is incorrect.' })
     }
-  })
+    const match = await bcryptjs.compare(password, user.password)
+    if (!match) {
+      return res.status(401).json({ error: 'The passowrd is incorrect.' })
+    }
+    const token = jwt.sign(
+      { id: user.id, username: user.username, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    )
+    res.json({
+      token,
+      user: { id: user.id, username: user.username, role: user.role }
+    })
+  } catch (err) {
+    console.error('Error loggin in:', err)
+    res.status(500).json({ error: 'Login failed.' })
+  }
+}
+
+const becomeAuthor = async (req, res) => {
+  const userId = req.user.id
+  try {
+    const author = await prisma.user.update({
+      where: { id: userId },
+      data: { role: 'AUTHOR' }
+    })
+    res.status(200).json(author)
+  } catch (err) {
+    console.error('Error changing user role.', err)
+    res.status(500).json({ error: 'Failed to change user role.'})
+  }
 }
 
 module.exports = {
-  getUserHome,
-  loginUser,
-  createPost
+  newUser,
+  login,
+  becomeAuthor
 }

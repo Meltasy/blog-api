@@ -1,16 +1,32 @@
-function verifyToken(req, res, next) {
-  const bearerHeader = req.headers['authorization']
-  if (typeof bearerHeader !== 'undefined') {
-    const bearer = bearerHeader.split(' ')
-    const bearerToken = bearer[1]
-    req.token = bearerToken
+const jwt = require('jsonwebtoken')
+
+const authenticate = async (req, res, next) => {
+  const authHeader = req.headers.authorization
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Missing authorization header.' })
+  }
+  const token = authHeader.split(' ')[1]
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    req.user = decoded
     next()
-  } else {
-    // res.sendStatus(403)
-    res.json({
-      message: '403 error: Forbidden - bearerHeader not authorized'
-    })
+  } catch (err) {
+    console.error('Invalid token:', err)
+    res.status(403).json({ error: 'Invalid token.' })
   }
 }
 
-module.exports = { verifyToken }
+const authorizeRole = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Authentication required.' })
+  }
+  if (req.user.role !== 'AUTHOR') {
+    return res.status(403).json({ error: 'Only authors have permission' })
+  }
+  next()
+}
+
+module.exports = {
+  authenticate,
+  authorizeRole
+}

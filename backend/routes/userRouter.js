@@ -1,10 +1,10 @@
 const { Router } = require('express')
 const userRouter = Router()
 const userController = require('../controllers/userController')
-const { verifyToken } = require('../authentication/jwtAuthenticate')
+const { authenticate } = require('../authentication/jwtAuthenticate')
 
-userRouter.get('/', userController.getUserHome)
-userRouter.post('/login', userController.loginUser)
-userRouter.post('/post', verifyToken, userController.createPost)
+userRouter.post('/', userController.newUser)
+userRouter.post('/login', userController.login)
+userRouter.patch('/author', authenticate, userController.becomeAuthor)
 
 module.exports = userRouter

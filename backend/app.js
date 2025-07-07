@@ -2,24 +2,24 @@ const express = require('express')
 // const cors = require('cors')
 const app = express()
 
+// For reference:
+// https://github.com/stef44n/blog-api-monorepo/tree/main
+// https://github.com/CassiusMercellus/TOP-blog-API/tree/master
+// https://github.com/JJcode404/blog-post-api/tree/main
+
 const userRouter = require('./routes/userRouter')
 const blogPostRouter = require('./routes/blogPostRouter')
 const commentRouter = require('./routes/commentRouter')
 
 // App middleware
 
-// Use Cors and json to access API from different origins - need to look into this
+// Use cors to access API from webpage (or different place that is NOT secure)
 // app.use(cors())
+
 app.use(express.json())
 
 // Used for POST and PUT requests only
 app.use(express.urlencoded({ extended: true }))
-
-// User available in all views
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user
-  next()
-})
 
 app.use('/', userRouter)
 app.use('/blogPost', blogPostRouter)
