@@ -1,5 +1,5 @@
 const express = require('express')
-// const cors = require('cors')
+const cors = require('cors')
 const app = express()
 
 // For reference:
@@ -13,17 +13,15 @@ const commentRouter = require('./routes/commentRouter')
 
 // App middleware
 
-// Use cors to access API from webpage (or different place that is NOT secure)
-// app.use(cors())
-
+app.use(cors())
 app.use(express.json())
 
 // Used for POST and PUT requests only
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/', userRouter)
-app.use('/blogPost', blogPostRouter)
-app.use('/comment', commentRouter)
+app.use('/blogPosts', blogPostRouter)
+app.use('/comments', commentRouter)
 
 // Normally at end - but can sit anywhere
 app.listen(process.env.PORT, '0.0.0.0', () => {

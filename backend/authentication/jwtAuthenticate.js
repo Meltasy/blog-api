@@ -9,6 +9,8 @@ const authenticate = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     req.user = decoded
+    // Do I need to store the token for future use? Will this be needed on the front end / api?
+    // req.token = token
     next()
   } catch (err) {
     console.error('Invalid token:', err)
