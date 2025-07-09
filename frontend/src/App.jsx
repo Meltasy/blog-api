@@ -1,21 +1,27 @@
-import { useState } from 'react'
+import { useLoaderData } from 'react-router-dom'
 import Navbar from './components/navbar.jsx'
 import BlogPosts from './components/blogPosts.jsx'
-import './assets/App.css'
+
+// User frontend:
+// Sign Up and Log In
+// Display published blog posts and comments
+// Create, edit and delete own comments
+// Become author - this redirects to other frontend?
+
+// Author frontend:
+// Log in
+// Display blog posts - both published and unpublished
+// Create blog posts
+// Edit and delete blog posts
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const { blogPosts } = useLoaderData()
+  
   return (
     <>
       <Navbar />
       <h1>Zena's blog</h1>
-      <BlogPosts />
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
+      <BlogPosts blogPosts={blogPosts} />
     </>
   )
 }

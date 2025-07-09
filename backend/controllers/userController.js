@@ -3,7 +3,7 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const bcryptjs = require('bcryptjs')
 
-const newUser = async (req, res) => {
+const signup = async (req, res) => {
   const { username, email, password } = req.body
   try {
     const hashPword = await bcryptjs.hash(password, 10)
@@ -66,7 +66,7 @@ const becomeAuthor = async (req, res) => {
 }
 
 module.exports = {
-  newUser,
+  signup,
   login,
   becomeAuthor
 }

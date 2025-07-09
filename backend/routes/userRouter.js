@@ -3,7 +3,7 @@ const userRouter = Router()
 const userController = require('../controllers/userController')
 const { authenticate } = require('../authentication/jwtAuthenticate')
 
-userRouter.post('/', userController.newUser)
+userRouter.post('/signup', userController.signup)
 userRouter.post('/login', userController.login)
 userRouter.patch('/author', authenticate, userController.becomeAuthor)
 

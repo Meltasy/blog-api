@@ -7,9 +7,6 @@ const getAllBlogPosts = async (req, res) => {
       where: { published: true },
       include: { author: true, comments: true }
     })
-    if (allBlogPosts.length === 0) {
-      return res.status(404).json({ error: 'No published blog posts found.'})
-    }
     res.status(200).json(allBlogPosts)
   } catch (err) {
     console.error('Error finding published blog posts.', err)
