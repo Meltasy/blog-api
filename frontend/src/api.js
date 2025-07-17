@@ -26,6 +26,21 @@ export async function signup(username, email, password) {
   return response.json()
 }
 
+export async function login(username, password) {
+  const response = await fetch(`${API_URL}/login`, {
+    mode: 'cors',
+    method: 'POST',
+    headers: header(),
+    body: JSON.stringify({ username, password })
+  })
+  if (!response.ok) {
+    const errorData = await response.json()
+    throw new Error(errorData.error || `Failed to log in: ${response.status}`)
+  }
+  console.log(response)
+  return response.json()
+}
+
 export async function getAllBlogPosts() {
     const response = await fetch(`${API_URL}/blogPosts`, { mode: 'cors' })
     if (!response.ok) {
@@ -36,7 +51,7 @@ export async function getAllBlogPosts() {
     return response.json()
 }
 
-export async function addComment() {
+export async function createComment(content, blogPostId) {
   const response = await fetch(`${API_URL}/comments`, {
     mode: 'cors',
     method: 'POST',

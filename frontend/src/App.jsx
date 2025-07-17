@@ -1,6 +1,11 @@
-import { useLoaderData } from 'react-router-dom'
-import Navbar from './components/navbar.jsx'
-import BlogPosts from './components/blogPosts.jsx'
+import GlobalStyles from './globalStyles'
+import styled from 'styled-components'
+import { Outlet } from 'react-router-dom'
+import Navbar from './components/navbar'
+
+const Wrapper = styled.main`
+  margin-top: 8rem;
+`
 
 // User frontend:
 // Sign Up and Log In
@@ -15,13 +20,13 @@ import BlogPosts from './components/blogPosts.jsx'
 // Edit and delete blog posts
 
 function App() {
-  const { blogPosts } = useLoaderData()
-  
-  return (
+   return (
     <>
+      <GlobalStyles />
       <Navbar />
-      <h1>Zena's blog</h1>
-      <BlogPosts blogPosts={blogPosts} />
+      <Wrapper>
+        <Outlet />
+      </Wrapper>
     </>
   )
 }

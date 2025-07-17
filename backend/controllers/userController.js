@@ -10,8 +10,14 @@ const signup = async (req, res) => {
     const user = await prisma.user.create({
       data: { username, email, password: hashPword }
     })
+    const token = jwt.sign(
+      { id: user.id, username: user.username, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    )
     res.status(201).json({
       message: 'New user created.',
+      token,
       user: { id: user.id, username: user.username }
     })
   } catch (err) {

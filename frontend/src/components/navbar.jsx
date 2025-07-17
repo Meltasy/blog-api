@@ -1,20 +1,40 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import styled from 'styled-components'
+
+const StyledList = styled.ul`
+  margin: auto;
+  display: flex;
+  gap: 4rem;
+`
+
+const StyledLink = styled(NavLink)`
+  font-size: 2rem;
+  text-decoration: none;
+  color: var(--background-color);
+  padding: 2.5rem;
+  margin: 20px;
+  &.active {
+    color: var(--primary-color);
+    background-color: var(--background-color);
+    padding: 1.5rem;
+  }
+`
 
 function Navbar() {
   return (
-    <>
-      <ul>
+    <nav>
+      <StyledList>
         <li>
-          <Link to='/'>Home</Link>
+          <StyledLink to='/'>Home</StyledLink>
         </li>
         <li>
-          <Link to='/signup'>Sign up</Link>
+          <StyledLink to='/signup'>Sign up</StyledLink>
         </li>
         <li>
-          <Link to='/login'>Log in</Link>
+          <StyledLink to='/login'>Log in</StyledLink>
         </li>
-      </ul>
-    </>
+      </StyledList>
+    </nav>
   )
 }
 
