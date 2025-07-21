@@ -9,6 +9,13 @@ const StyledList = styled.ul`
   justify-content: center;
 `
 
+const StyledDiv = styled.div`
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 2rem;
+`
+
 function AllBlogPosts({ allBlogPosts, onPostSelect }) {
   return (
     <>
@@ -19,7 +26,7 @@ function AllBlogPosts({ allBlogPosts, onPostSelect }) {
           ))}
         </StyledList>
       ) : (
-        <div>There are no blog posts in the list!</div>
+        <StyledDiv>There are no blog posts in the list!</StyledDiv>
       )
     }
     </>

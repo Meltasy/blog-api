@@ -58,7 +58,8 @@ const GlobalStyles = createGlobalStyle`
   form {
     background-color: var(--primary-color);
     width: max-content;
-    margin: auto;
+    margin: auto;                rows='3'
+                columns='80'
     padding: 2rem;
     border-radius: 1rem;
     display: flex;
@@ -75,7 +76,8 @@ const GlobalStyles = createGlobalStyle`
     margin-right: 1rem;
   }
 
-  input {
+  input,
+  textarea {
     font-family: inherit;
     font-size: 1.2rem;
     color: var(--background-color);

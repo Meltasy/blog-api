@@ -1,12 +1,12 @@
-import styled from 'styled-components'
 import { useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
 import { createComment, updateComment, deleteComment } from '../api'
 import { getCurrentUser, canModifyComment } from '../utils/authenticate'
+import styled from 'styled-components'
 
 const Wrapper = styled.div`
   color: var(--background-color);
-  background-color: var(--primary-color);max-width: 60rem;
+  background-color: var(--primary-color);
+  max-width: 60rem;
   padding: 2rem;
   margin: 0 auto;
   border-radius: 1rem;
@@ -26,6 +26,12 @@ const CommentWrapper = styled.div`
   border-radius: 1rem;
 `
 
+const NewCommentWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+`
+
 const Comment = styled.div`
   color: var(--secondary-color-dark);
   background-color: var(--secondary-color-light);
@@ -39,7 +45,12 @@ const UserDateWrapper = styled.div`
   font-size: 0.8rem;
   font-style: italic;
   font-weight: bold;
+`
+
+const ButtonsWrapper = styled.div`
   display: flex;
+  margin: 1rem 0;
+  gap: 1rem;
   justify-content: flex-end;
 `
 
@@ -57,52 +68,7 @@ const LoadingSpinner = styled.div`
   }
 `
 
-// const CommentActions = styled.div`
-//   display: flex;
-//   gap: 0.5rem;
-//   margin-bottom: 1rem;
-  
-//   button {
-//     padding: 0.25rem 0.5rem;
-//     border: 1px solid var(--secondary-color-dark);
-//     background: var(--secondary-color);
-//     color: var(--secondary-color-dark);
-//     border-radius: 0.25rem;
-//     cursor: pointer;
-//     font-size: 0.8rem;
-    
-//     &:hover {
-//       background: var(--secondary-color-dark);
-//       color: var(--secondary-color);
-//     }
-    
-//     &:disabled {
-//       opacity: 0.5;
-//       cursor: not-allowed;
-//     }
-//   }
-// `
-
-// const LoginPrompt = styled.div`
-//   text-align: center;
-//   padding: 1rem;
-//   background: var(--secondary-color-light);
-//   border-radius: 0.5rem;
-//   margin-bottom: 1rem;
-  
-//   a {
-//     color: var(--primary-color);
-//     text-decoration: none;
-//     font-weight: bold;
-    
-//     &:hover {
-//       text-decoration: underline;
-//     }
-//   }
-// `
-
-function BlogPostDetail({ post, onReturn }) {
-  const { user } = useOutletContext()
+function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCommentDeleted }) {
   const [comments, setComments] = useState(post.comments || [])
   const [newComment, setNewComment] = useState('')
   const [editingId, setEditingId] = useState(null)
@@ -114,7 +80,9 @@ function BlogPostDetail({ post, onReturn }) {
 
   const handleCreateComment = async (e) => {
     e.preventDefault()
-    if (!newComment.trim()) return
+    if (!newComment.trim()) {
+      return
+    }
     if (!currentUser) {
       setError('Please log in to comment.')
       return
@@ -136,6 +104,7 @@ function BlogPostDetail({ post, onReturn }) {
       setComments(previous => previous.map(comment =>
         comment.id === tempId ? createdComment : comment
       ))
+      onCommentAdded(post.id, createdComment)
       setError('')
     } catch (err) {
       setComments(previous => previous.filter(comment => comment.id !== tempId))
@@ -160,16 +129,18 @@ function BlogPostDetail({ post, onReturn }) {
       return
     }
     const originalComment = comments.find(comment => comment.id === commentId)
+    const updatedComment = { ...originalComment, content: editContent }
     setComments(previous => previous.map(comment =>
-      comment.id ===commentId ? { ...comment, content: editContent} : comment
+      comment.id ===commentId ? updatedComment : comment
     ))
     setEditingId(null)
     setLoading(previous => ({ ...previous, [commentId]: true }))
     try {
-      const updatedComment = await updateComment(commentId, editContent)
+      const serverUpdatedComment = await updateComment(commentId, editContent)
       setComments(previous => previous.map(comment =>
-        comment.id === commentId ? updatedComment : comment
+        comment.id === commentId ? serverUpdatedComment : comment
       ))
+      onCommentUpdated(post.id, commentId, serverUpdatedComment)
       setError('')
     } catch (err) {
       setComments(previous => previous.map(comment =>
@@ -186,10 +157,11 @@ function BlogPostDetail({ post, onReturn }) {
       return
     }
     const originalComments = comments
-    setComments(Previous => previous.filter(comment => comment.id !== commentId))
+    setComments(previous => previous.filter(comment => comment.id !== commentId))
     setLoading(previous => ({ ...previous, [commentId]: true }))
     try {
       await deleteComment(commentId)
+      onCommentDeleted(post.id, commentId)
       setError('')
     } catch (err) {
       setComments(originalComments)
@@ -223,66 +195,67 @@ function BlogPostDetail({ post, onReturn }) {
             {error}
           </div>
         )}
-        {/* {!currentUser && (
-          <LoginPrompt>
-            <a href='/login'>Login</a> or <a href='/signup'>Sign up</a> to post a comment
-          </LoginPrompt>
-        )} */}
         {currentUser && (
           <form onSubmit={handleCreateComment}>
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder='Add a comment ...'
-              disabled={loading.create}
-            />
-            <div>
+            <NewCommentWrapper>
+              <textarea
+                rows='3'
+                columns='80'
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder='Add a comment ...'
+                disabled={loading.create}
+              />
               <button className='button' type='submit' disabled={loading.create || !newComment.trim()}>
                 {loading.create ? <LoadingSpinner /> : 'Post comment'}
               </button>
-            </div>
+            </NewCommentWrapper>
           </form>
         )}
         {comments.length > 0 ? (
           comments.map((comment) => (
               <Comment key={comment.id}>
+                <p>{comment.content}</p>
+                <UserDateWrapper>
+                  <p>{comment.user?.username || 'Anonymous'}, {formatDate(comment.createdAt)}</p>
+                </UserDateWrapper>
                 {canModifyComment(comment) && (
-                  <div>
+                  <ButtonsWrapper>
                     <button className='button' onClick={() => handleEditStart(comment)} disabled={loading[comment.id]}>
                       Edit
                     </button>
                     <button className='button' onClick={() => handleDeleteComment(comment.id)} disabled={loading[comment.id]}>
                       Delete
                     </button>
-                  </div>
+                  </ButtonsWrapper>
                 )}
-                <p>{comment.content}</p>
-                <UserDateWrapper>
-                  <p>{comment.user?.username || 'Anonymous'}, {formatDate(comment.createdAt)}</p>
-                </UserDateWrapper>
                 {editingId === comment.id ? (
                   <form onSubmit={(e) => {
-                    e.preventDefault
+                    e.preventDefault()
                     handleUpdateComment(comment.id)
                   }}>
-                    <textarea
-                      value={editContent}
-                      onChange={(e) => setEditContent(e.target.value)}
-                      autoFocus
-                    />
-                    <div>
-                      <button className='button' type='submit'>
-                        Save
-                      </button>
-                      <button className='button' type='button' onClick={handleEditCancel}>
-                        Cancel
-                      </button>
-                    </div>
+                    <NewCommentWrapper>
+                      <textarea
+                        rows='3'
+                        columns='80'
+                        value={editContent}
+                        onChange={(e) => setEditContent(e.target.value)}
+                        autoFocus
+                      />
+                      <ButtonsWrapper>
+                        <button className='button' type='submit'>
+                          Save
+                        </button>
+                        <button className='button' type='button' onClick={handleEditCancel}>
+                          Cancel
+                        </button>
+                      </ButtonsWrapper>
+                    </NewCommentWrapper>
                   </form>
                 ) : (
-                  <p>
+                  <div>
                     {loading[comment.id] && <LoadingSpinner />}
-                  </p>
+                  </div>
                 )}
               </Comment>
           ))

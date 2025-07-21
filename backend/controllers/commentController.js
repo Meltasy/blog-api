@@ -6,7 +6,6 @@ const getAllCommentsForPost = async (req, res) => {
   try {
     const allComments = await prisma.comment.findMany({
       where: { blogPostId },
-      // Should this be author or user?
       include: { user: true }
     })
     res.status(200).json(allComments)
@@ -24,7 +23,8 @@ const createComment = async (req, res) => {
   }
   try {
     const comment = await prisma.comment.create({
-      data: { content, blogPostId, userId }
+      data: { content, blogPostId, userId },
+      include: { user: true }
     })
     res.status(201).json(comment)
   } catch (err) {
@@ -39,7 +39,8 @@ const updateComment = async (req, res) => {
   try {
     const comment = await prisma.comment.update({
       where: { id: commentId },
-      data: { content }
+      data: { content },
+      include: { user: true }
     })
     res.status(200).json(comment)
   } catch (err) {
