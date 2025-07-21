@@ -1,12 +1,32 @@
 import { useLoaderData } from 'react-router-dom'
-import BlogPosts from '../components/blogPosts.jsx'
+import { useState } from 'react'
+import AllBlogPosts from '../components/allBlogPosts.jsx'
+import BlogPostDetail from '../components/blogPostDetail.jsx'
 
 function Home() {
-  const { blogPosts } = useLoaderData()
+  const { allBlogPosts } = useLoaderData()
+  const [selectedPost, setSelectedPost] = useState(null)
+
+  const handlePostSelect = (post) => {
+    setSelectedPost(post)
+  }
+
+  const handleReturnAll = () => {
+    setSelectedPost(null)
+  }
+
   return (
     <>
-      <h1>Zena's blog</h1>
-      <BlogPosts blogPosts={blogPosts} />
+      <header>
+        <h1>Zena's blog</h1>
+      </header>
+      <main>
+        {selectedPost ? (
+          <BlogPostDetail post={selectedPost} onReturn={handleReturnAll} />
+        ) : (
+          <AllBlogPosts allBlogPosts={allBlogPosts} onPostSelect={handlePostSelect} />
+        )}
+      </main>
     </>
   )
 }

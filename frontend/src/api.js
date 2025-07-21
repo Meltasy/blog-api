@@ -1,17 +1,18 @@
+import { getUserHeader } from './utils/authenticate'
+
 const API_URL = import.meta.env.VITE_API_URL
 
 const header = () => ({
   'Content-type': 'application/json'
 })
 
-const authHeader = () => ({
+const userHeader = () => ({
+  // Can I not just change the next line for header() ?
   'Content-type': 'application/json',
-  Authorization: `Bearer ${localStorage.getItem('token')}`
+  ...getUserHeader()
 })
 
-// Use Promise.all to e.g. fetch blogPosts and comments at the same time
-
-export async function signup(username, email, password) {
+async function signup(username, email, password) {
   const response = await fetch(`${API_URL}/signup`, {
     mode: 'cors',
     method: 'POST',
@@ -26,7 +27,7 @@ export async function signup(username, email, password) {
   return response.json()
 }
 
-export async function login(username, password) {
+async function login(username, password) {
   const response = await fetch(`${API_URL}/login`, {
     mode: 'cors',
     method: 'POST',
@@ -41,7 +42,7 @@ export async function login(username, password) {
   return response.json()
 }
 
-export async function getAllBlogPosts() {
+async function getAllBlogPosts() {
     const response = await fetch(`${API_URL}/blogPosts`, { mode: 'cors' })
     if (!response.ok) {
       const errorData = await response.json()
@@ -51,11 +52,31 @@ export async function getAllBlogPosts() {
     return response.json()
 }
 
-export async function createComment(content, blogPostId) {
+async function getBlogPost(blogPostId) {
+  const response = await fetch(`${API_URL}/blogPosts/${blogPostId}`, { mode: 'cors' })
+  if (!response.ok) {
+    const errorData = await response.json()
+    throw new Error(errorData.error || `Failed to find blog post ${blogPostId}: ${response.status}`)
+  }
+  console.log(response)
+  return response.json()
+}
+
+async function getAllCommentsForPost(blogPostId) {
+  const response = await fetch(`${API_URL}/comments/${blogPostId}`, { mode: 'cors' })
+  if (!response.ok) {
+    const errorData = await response.json()
+    throw new Error(errorData.error || `Failed to find comments for blog post ${blogPostId}: ${response.status}`)
+  }
+  console.log(response)
+  return response.json()
+}
+
+async function createComment(content, blogPostId) {
   const response = await fetch(`${API_URL}/comments`, {
     mode: 'cors',
     method: 'POST',
-    headers: authHeader(),
+    headers: userHeader(),
     body: JSON.stringify({ content, blogPostId })
   })
   if (!response.ok) {
@@ -64,4 +85,44 @@ export async function createComment(content, blogPostId) {
   }
   console.log(response)
   return response.json()
+}
+
+async function updateComment(commentId, content) {
+  const response = await fetch(`${API_URL}/comments/${commentId}`, {
+    mode: 'cors',
+    method: 'PUT',
+    headers: userHeader(),
+    body: JSON.stringify({ content })
+  })
+  if (!response.ok) {
+    const errorData = await response.json()
+    throw new Error(errorData.error || `Failed to update comment: ${response.status}`)
+  }
+  console.log(response)
+  return response.json()
+}
+
+async function deleteComment(commentId) {
+  const response = await fetch(`${API_URL}/comments/${commentId}`, {
+    mode: 'cors',
+    method: 'DELETE',
+    headers: userHeader()
+  })
+  if (!response.ok) {
+    const errorData = await response.json()
+    throw new Error(errorData.error || `Failed to delete comment: ${response.status}`)
+  }
+  console.log(response)
+  return response.status === 204 ? {} : response.json()
+}
+
+export {
+  signup,
+  login,
+  getAllBlogPosts,
+  getBlogPost,
+  getAllCommentsForPost,
+  createComment,
+  updateComment,
+  deleteComment
 }

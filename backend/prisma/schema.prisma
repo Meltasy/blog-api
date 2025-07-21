@@ -34,8 +34,8 @@ model Comment {
   id         String   @id @default(uuid())
   content    String
   createdAt  DateTime @default(now())
-  author     User?    @relation(fields: [authorId], references: [id])
-  authorId   String?
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
   blogPost   Post     @relation(fields: [blogPostId], references: [id])
   blogPostId String
 }

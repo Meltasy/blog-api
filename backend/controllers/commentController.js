@@ -2,15 +2,13 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 const getAllCommentsForPost = async (req, res) => {
-  const postId = req.params.postId
+  const blogPostId = req.params.blogPostId
   try {
     const allComments = await prisma.comment.findMany({
-      where: { blogPostId: postId },
-      include: { author: true }
+      where: { blogPostId },
+      // Should this be author or user?
+      include: { user: true }
     })
-    if (allComments.length === 0) {
-      return res.status(404).json({ error: 'No comments found for this blog post.' })
-    }
     res.status(200).json(allComments)
   } catch (err) {
     console.error('Error finding comments for blog post.', err)
@@ -20,13 +18,13 @@ const getAllCommentsForPost = async (req, res) => {
 
 const createComment = async (req, res) => {
   const { content, blogPostId } = req.body
-  const authorId = req.user.id
+  const userId = req.user.id
   if (!blogPostId) {
     return res.status(404).json({ error: 'No blog post found.'})
   }
   try {
     const comment = await prisma.comment.create({
-      data: { content, blogPostId, authorId }
+      data: { content, blogPostId, userId }
     })
     res.status(201).json(comment)
   } catch (err) {
@@ -37,14 +35,11 @@ const createComment = async (req, res) => {
 
 const updateComment = async (req, res) => {
   const commentId = req.params.id
-  const { content, blogPostId } = req.body
-  if (!blogPostId) {
-    return res.status(404).json({ error: 'No blog post found.'})
-  }
+  const { content } = req.body
   try {
     const comment = await prisma.comment.update({
       where: { id: commentId },
-      data: { content, blogPostId }
+      data: { content }
     })
     res.status(200).json(comment)
   } catch (err) {

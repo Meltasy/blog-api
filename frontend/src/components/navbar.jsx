@@ -1,39 +1,66 @@
 import { NavLink } from 'react-router-dom'
+import { logout } from '../utils/authenticate'
 import styled from 'styled-components'
 
-const StyledList = styled.ul`
-  margin: auto;
-  display: flex;
-  gap: 4rem;
+const baseStyles = `
+  font-family: inherit;
+  font-size: 2rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--background-color);
+  background-color: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 2.5rem;
+  margin: 20px;
+  cursor: pointer;
 `
 
 const StyledLink = styled(NavLink)`
-  font-size: 2rem;
-  text-decoration: none;
-  color: var(--background-color);
-  padding: 2.5rem;
-  margin: 20px;
+  ${baseStyles}
   &.active {
     color: var(--primary-color);
     background-color: var(--background-color);
-    padding: 1.5rem;
+  }
+  &:hover {
+    color: var(--primary-color-dark);
+    background-color: var(--background-color);
   }
 `
 
-function Navbar() {
+const StyledButton = styled.button`
+  ${baseStyles}
+  &:hover {
+    color: var(--primary-color-dark);
+    background-color: var(--background-color);
+  }
+`
+
+function Navbar({ user, onLogout }) {
+  const handleLogout = () => {
+    logout()
+    onLogout()
+  }
+
   return (
     <nav>
-      <StyledList>
-        <li>
-          <StyledLink to='/'>Home</StyledLink>
-        </li>
-        <li>
+      <div>
+        <StyledLink to='/'>Home</StyledLink>
+      </div>
+      { user ? (
+        <div>
+          <StyledButton onClick={handleLogout}>Logout</StyledButton>
+        </div>
+      ) : (
+      <>
+        <div>
           <StyledLink to='/signup'>Sign up</StyledLink>
-        </li>
-        <li>
+        </div>
+        <div>
           <StyledLink to='/login'>Log in</StyledLink>
-        </li>
-      </StyledList>
+        </div>
+      </>
+      )}
     </nav>
   )
 }

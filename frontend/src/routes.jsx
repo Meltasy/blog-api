@@ -3,14 +3,24 @@ import Home from './pages/home'
 import LogIn from './pages/logIn'
 import SignUp from './pages/signUp'
 import ErrorPage from './pages/notFound'
-import { getAllBlogPosts } from './api'
+import { getAllBlogPosts, getAllCommentsForPost } from './api'
 
-const blogPostsLoader = async () => {
+const allBlogPostsWithCommentsLoader = async () => {
   try {
-    const blogPosts = await getAllBlogPosts()
-    return { blogPosts }
+    const allBlogPosts = await getAllBlogPosts()
+    const blogPostsWithComments = await Promise.all(
+      allBlogPosts.map(async (post) => {
+        try {
+          const comments = await getAllCommentsForPost(post.id)
+          return { ...post, comments }
+        } catch (error) {
+          return { ...post, comments: [] }
+        }
+      })
+    )
+    return { allBlogPosts: blogPostsWithComments }
   } catch (error) {
-    throw new Error('Failed to load blog posts.')
+    throw new Error('Failed to load blog posts with comments.')
   }
 }
 
@@ -23,20 +33,20 @@ const routes = [
       {
         index: true,
         element: <Home />,
-        loader: blogPostsLoader
+        loader: allBlogPostsWithCommentsLoader
       },
       {
         path: 'home',
         element: <Home />,
-        loader: blogPostsLoader
-      },
-      {
-        path: 'login',
-        element: <LogIn />
+        loader: allBlogPostsWithCommentsLoader
       },
       {
         path: 'signup',
         element: <SignUp />
+      },
+      {
+        path: 'login',
+        element: <LogIn />
       }
     ]
   }
