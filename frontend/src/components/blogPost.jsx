@@ -16,6 +16,7 @@ const ButtonWrapper = styled.div`
 
 const CommentCount = styled.p`
   font-style: italic;
+  font-weight: bold;
   color: var(--secondary-color);
 `
 

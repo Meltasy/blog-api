@@ -2,11 +2,6 @@ import { useState } from 'react'
 import { useNavigate, useOutletContext } from 'react-router-dom'
 import { signup } from '../api'
 import { getCurrentUser } from '../utils/authenticate'
-import styled from 'styled-components'
-
-const ButtonWrapper = styled.div`
-  align-self: center;
-`
 
 function SignUp() {
   const [form, setForm] = useState({username: '', email: '', password: '', confirmPassword: ''})
@@ -81,7 +76,7 @@ function SignUp() {
       localStorage.setItem('token', response.token)
       const user = getCurrentUser()
       onUserUpdate(user)
-      navigate('/home')
+      navigate('/')
     } catch (error) {
       if (error.message.includes('username') || error.message.includes('email')) {
         setErrors({ general: 'This username or email already exists. Please try different credentials or login.' })
@@ -171,11 +166,11 @@ function SignUp() {
               {errors.confirmPassword && <div className='errors'>{errors.confirmPassword}</div>}
             </div>
           </div>
-          <ButtonWrapper>
+          <div className='buttonBox'>
             <button className='button' type='submit' disabled={loading || hasErrors}>
               {loading ? 'Signing up ...' : 'Sign up'}
             </button>
-          </ButtonWrapper>
+          </div>
         </form>
       </main>
     </>

@@ -58,8 +58,7 @@ const GlobalStyles = createGlobalStyle`
   form {
     background-color: var(--primary-color);
     width: max-content;
-    margin: auto;                rows='3'
-                columns='80'
+    margin: auto;
     padding: 2rem;
     border-radius: 1rem;
     display: flex;
@@ -87,6 +86,10 @@ const GlobalStyles = createGlobalStyle`
     outline: none;
     padding: 0.5rem 1rem;
     min-width: 400px;
+  }
+
+  .buttonBox {
+    align-self: center;
   }
 
   .button {

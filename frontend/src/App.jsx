@@ -13,7 +13,7 @@ const Wrapper = styled.main`
 // Sign Up and Log In
 // Display published blog posts and comments
 // Create, edit and delete own comments
-// Become author - this redirects to other frontend?
+// Become author redirects to /home ... but will need to give access to other frontend
 
 // Author frontend:
 // Log in

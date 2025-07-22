@@ -64,7 +64,16 @@ const becomeAuthor = async (req, res) => {
       where: { id: userId },
       data: { role: 'AUTHOR' }
     })
-    res.status(200).json(author)
+    const newToken = jwt.sign(
+      { id: author.id, username: author.username, email: author.email, role: author.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    )
+    res.status(200).json({
+      message: 'Successfully became an author',
+      token: newToken,
+      user: { id: author.id, username: author.username, role: author.role }
+    })
   } catch (err) {
     console.error('Error changing user role.', err)
     res.status(500).json({ error: 'Failed to change user role.'})

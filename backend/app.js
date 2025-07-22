@@ -3,9 +3,8 @@ const cors = require('cors')
 const app = express()
 
 // For reference:
-// https://github.com/stef44n/blog-api-monorepo/tree/main
-// https://github.com/CassiusMercellus/TOP-blog-API/tree/master
-// https://github.com/JJcode404/blog-post-api/tree/main
+// https://github.com/Botifywm/BlogAPI/tree/main
+// https://github.com/Exemption6877/odin-blog-api/tree/main
 
 const userRouter = require('./routes/userRouter')
 const blogPostRouter = require('./routes/blogPostRouter')

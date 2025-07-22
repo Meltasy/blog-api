@@ -10,8 +10,7 @@ const baseStyles = `
   color: var(--background-color);
   background-color: transparent;
   border: none;
-  border-radius: 0.5rem;
-  padding: 2.5rem;
+  padding: 2rem;
   margin: 20px;
   cursor: pointer;
 `
@@ -42,15 +41,24 @@ function Navbar({ user, onLogout }) {
     onLogout()
   }
 
+  const isAuthor = user && user.role === 'AUTHOR'
+
   return (
     <nav>
       <div>
         <StyledLink to='/'>Home</StyledLink>
       </div>
       { user ? (
-        <div>
-          <StyledButton onClick={handleLogout}>Logout</StyledButton>
-        </div>
+        <>
+          {!isAuthor && (
+            <div>
+              <StyledLink to='/author'>Become author</StyledLink>
+            </div>
+          )}
+          <div>
+            <StyledButton onClick={handleLogout}>Logout</StyledButton>
+          </div>
+        </>
       ) : (
       <>
         <div>

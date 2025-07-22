@@ -2,11 +2,6 @@ import { useState } from 'react'
 import { useNavigate, useOutletContext } from 'react-router-dom'
 import { login } from '../api'
 import { getCurrentUser } from '../utils/authenticate'
-import styled from 'styled-components'
-
-const ButtonWrapper = styled.div`
-  align-self: center;
-`
 
 function LogIn() {
   const [username, setUsername] = useState('')
@@ -43,7 +38,7 @@ function LogIn() {
       localStorage.setItem('token', response.token)
       const user = getCurrentUser()
       onUserUpdate(user)
-      navigate('/home')
+      navigate('/')
     } catch (error) {
       if (error.message.includes('username is incorrect') || error.message.includes('password is incorrect')) {
         setErrors({ general: 'Invalid username or password.' })
@@ -115,11 +110,11 @@ function LogIn() {
               {errors.password && <div className='errors'>{errors.password}</div>}
             </div>
           </div>
-          <ButtonWrapper>
+          <div className='buttonBox'>
             <button className='button' type='submit' disabled={loading || hasErrors}>
               {loading ? 'logging in ...' : 'Log in'}
             </button>
-          </ButtonWrapper>
+          </div>
         </form>
       </main>
     </>

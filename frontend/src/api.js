@@ -7,8 +7,7 @@ const header = () => ({
 })
 
 const userHeader = () => ({
-  // Can I not just change the next line for header() ?
-  'Content-type': 'application/json',
+  ...header(),
   ...getUserHeader()
 })
 
@@ -37,6 +36,20 @@ async function login(username, password) {
   if (!response.ok) {
     const errorData = await response.json()
     throw new Error(errorData.error || `Failed to log in: ${response.status}`)
+  }
+  console.log(response)
+  return response.json()
+}
+
+async function becomeAuthor() {
+  const response = await fetch(`${API_URL}/author`, {
+    mode: 'cors',
+    method: 'PATCH',
+    headers: userHeader()
+  })
+  if (!response.ok) {
+    const errorData = await response.json()
+    throw new Error(errorData.error || `Failed to become author: ${response.status}`)
   }
   console.log(response)
   return response.json()
@@ -119,6 +132,7 @@ async function deleteComment(commentId) {
 export {
   signup,
   login,
+  becomeAuthor,
   getAllBlogPosts,
   getBlogPost,
   getAllCommentsForPost,

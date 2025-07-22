@@ -1,5 +1,6 @@
-import App from './App.jsx'
+import App from './App'
 import Home from './pages/home'
+import BeAuthor from './pages/beAuthor'
 import LogIn from './pages/logIn'
 import SignUp from './pages/signUp'
 import ErrorPage from './pages/notFound'
@@ -39,6 +40,10 @@ const routes = [
         path: 'home',
         element: <Home />,
         loader: allBlogPostsWithCommentsLoader
+      },
+      {
+        path: 'author',
+        element: <BeAuthor />
       },
       {
         path: 'signup',
