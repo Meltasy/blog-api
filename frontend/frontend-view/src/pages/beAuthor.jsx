@@ -17,16 +17,15 @@ function BeAuthor() {
     setError('')
     if (!currentUser) {
       setError('Please log in to become author.')
+      return
     }
     if (!passcode.trim()) {
       setError('Passcode is required.')
-    }
-    if (passcode !== import.meta.env.VITE_PASSCODE) {
-      setError('Passcode is incorrect. Please try again.')
+      return
     }
     setLoading(true)
     try {
-      const data = await becomeAuthor()
+      const data = await becomeAuthor(passcode)
       if (data.token) {
         localStorage.setItem('token', data.token)
         const updatedUser = getCurrentUser()

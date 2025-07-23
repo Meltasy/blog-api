@@ -22,8 +22,6 @@ function LogIn() {
     return newErrors
   }
 
-  const hasErrors = Object.keys(errors).length > 0
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     const validationErrors = validateForm()
@@ -55,6 +53,7 @@ function LogIn() {
     if (errors.username) {
       const newErrors = { ...errors }
       delete newErrors.username
+      delete newErrors.general
       setErrors(newErrors)
     }
   }
@@ -64,6 +63,7 @@ function LogIn() {
     if (errors.password) {
       const newErrors = { ...errors }
       delete newErrors.password
+      delete newErrors.general
       setErrors(newErrors)
     }
   }
@@ -111,7 +111,7 @@ function LogIn() {
             </div>
           </div>
           <div className='buttonBox'>
-            <button className='button' type='submit' disabled={loading || hasErrors}>
+            <button className='button' type='submit' disabled={loading}>
               {loading ? 'logging in ...' : 'Log in'}
             </button>
           </div>

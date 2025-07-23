@@ -41,11 +41,12 @@ async function login(username, password) {
   return response.json()
 }
 
-async function becomeAuthor() {
-  const response = await fetch(`${API_URL}/author`, {
+async function becomeAuthor(passcode) {
+  const response = await fetch(`${API_URL}/beAuthor`, {
     mode: 'cors',
     method: 'PATCH',
-    headers: userHeader()
+    headers: userHeader(),
+    body: JSON.stringify({ passcode })
   })
   if (!response.ok) {
     const errorData = await response.json()

@@ -1,4 +1,4 @@
-import { Link, useRouteError } from 'react-router-dom'
+import { NavLink, useRouteError } from 'react-router-dom'
 
 const ErrorPage = () => {
   const error = useRouteError()
@@ -10,9 +10,9 @@ const ErrorPage = () => {
       <p>
         <i>{error?.message || 'Unknown error'}</i>
       </p>
-      <Link to='/'>
+      <NavLink to='/'>
         Take me home!
-      </Link>
+      </NavLink>
     </div>
   )
 }

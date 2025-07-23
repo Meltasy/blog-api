@@ -42,7 +42,7 @@ const routes = [
         loader: allBlogPostsWithCommentsLoader
       },
       {
-        path: 'author',
+        path: 'beAuthor',
         element: <BeAuthor />
       },
       {

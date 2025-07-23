@@ -62,8 +62,6 @@ function SignUp() {
     return Object.keys(newErrors).length === 0
   }
 
-  const hasErrors = Object.keys(errors).length > 0
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!validateForm()) {
@@ -167,7 +165,7 @@ function SignUp() {
             </div>
           </div>
           <div className='buttonBox'>
-            <button className='button' type='submit' disabled={loading || hasErrors}>
+            <button className='button' type='submit' disabled={loading}>
               {loading ? 'Signing up ...' : 'Sign up'}
             </button>
           </div>

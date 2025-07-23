@@ -15,23 +15,32 @@ const baseStyles = `
   cursor: pointer;
 `
 
-const StyledLink = styled(NavLink)`
-  ${baseStyles}
+const linkStyles =`
   &.active {
     color: var(--primary-color);
     background-color: var(--background-color);
   }
   &:hover {
     color: var(--primary-color-dark);
-    background-color: var(--background-color);
+    background-color: var(--primary-color-light);
   }
+`
+
+const StyledLink = styled(NavLink)`
+  ${baseStyles}
+  ${linkStyles}
+`
+
+const StyledBridge = styled.a`
+  ${baseStyles}
+  ${linkStyles}
 `
 
 const StyledButton = styled.button`
   ${baseStyles}
   &:hover {
     color: var(--primary-color-dark);
-    background-color: var(--background-color);
+    background-color: var(--primary-color-light);
   }
 `
 
@@ -41,6 +50,7 @@ function Navbar({ user, onLogout }) {
     onLogout()
   }
 
+  const AUTHOR_URL = import.meta.env.VITE_AUTHOR_URL
   const isAuthor = user && user.role === 'AUTHOR'
 
   return (
@@ -52,7 +62,12 @@ function Navbar({ user, onLogout }) {
         <>
           {!isAuthor && (
             <div>
-              <StyledLink to='/author'>Become author</StyledLink>
+              <StyledLink to='/beAuthor'>Become author</StyledLink>
+            </div>
+          )}
+          {isAuthor && (
+            <div>
+              <StyledBridge href={`${AUTHOR_URL}`}>Author Dashboard</StyledBridge>
             </div>
           )}
           <div>

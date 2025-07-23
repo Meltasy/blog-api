@@ -5,6 +5,6 @@ const { authenticate } = require('../authentication/jwtAuthenticate')
 
 userRouter.post('/signup', userController.signup)
 userRouter.post('/login', userController.login)
-userRouter.patch('/author', authenticate, userController.becomeAuthor)
+userRouter.patch('/beAuthor', authenticate, userController.becomeAuthor)
 
 module.exports = userRouter

@@ -16,7 +16,6 @@ const signup = async (req, res) => {
       { expiresIn: '24h' }
     )
     res.status(201).json({
-      message: 'New user created.',
       token,
       user: { id: user.id, username: user.username }
     })
@@ -40,7 +39,7 @@ const login = async (req, res) => {
     }
     const match = await bcryptjs.compare(password, user.password)
     if (!match) {
-      return res.status(401).json({ error: 'The passowrd is incorrect.' })
+      return res.status(401).json({ error: 'The password is incorrect.' })
     }
     const token = jwt.sign(
       { id: user.id, username: user.username, email: user.email, role: user.role },
@@ -58,6 +57,10 @@ const login = async (req, res) => {
 }
 
 const becomeAuthor = async (req, res) => {
+  const { passcode } = req.body
+  if (!passcode || passcode !== process.env.AUTHOR_PASSCODE) {
+    return res.status(403).json({ error: 'The passcode is incorrect.' })
+  }
   const userId = req.user.id
   try {
     const author = await prisma.user.update({
@@ -70,7 +73,6 @@ const becomeAuthor = async (req, res) => {
       { expiresIn: '24h' }
     )
     res.status(200).json({
-      message: 'Successfully became an author',
       token: newToken,
       user: { id: author.id, username: author.username, role: author.role }
     })
