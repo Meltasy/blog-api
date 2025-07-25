@@ -4,8 +4,8 @@ import AllBlogPosts from '../components/allBlogPosts.jsx'
 import BlogPostDetail from '../components/blogPostDetail.jsx'
 
 function Home() {
-  const { allBlogPosts: initialBlogPosts } = useLoaderData()
-  const [allBlogPosts, setAllBlogPosts] = useState(initialBlogPosts || [])
+  const { publishedBlogPosts: initialBlogPosts } = useLoaderData()
+  const [publishedBlogPosts, setPublishedBlogPosts] = useState(initialBlogPosts || [])
   const [selectedPost, setSelectedPost] = useState(null)
 
   const handlePostSelect = (post) => {
@@ -17,7 +17,7 @@ function Home() {
   }
 
   const handleCommentAdded = (postId, newComment) => {
-    setAllBlogPosts(prevPosts =>
+    setPublishedBlogPosts(prevPosts =>
       prevPosts.map(post => post.id === postId
         ? { ...post, comments: [ ...(post.comments || []), newComment] }
         : post
@@ -32,7 +32,7 @@ function Home() {
   }
 
   const handleCommentUpdated = (postId, commentId, updatedComment) => {
-    setAllBlogPosts(prevPosts =>
+    setPublishedBlogPosts(prevPosts =>
       prevPosts.map(post => post.id === postId
         ? { ...post, comments: post.comments.map(comment => comment.id === commentId
         ? updatedComment : comment )}
@@ -50,7 +50,7 @@ function Home() {
   }
 
   const handleCommentDeleted = (postId, commentId) => {
-    setAllBlogPosts(prevPosts =>
+    setPublishedBlogPosts(prevPosts =>
       prevPosts.map(post => post.id === postId
         ? { ...post, comments: post.comments.filter(comment => comment.id !== commentId)}
         : post
@@ -78,7 +78,7 @@ function Home() {
             onCommentDeleted={handleCommentDeleted}
           />
         ) : (
-          <AllBlogPosts allBlogPosts={allBlogPosts} onPostSelect={handlePostSelect} />
+          <AllBlogPosts publishedBlogPosts={publishedBlogPosts} onPostSelect={handlePostSelect} />
         )}
       </main>
     </>

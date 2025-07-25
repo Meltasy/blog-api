@@ -22,7 +22,6 @@ async function signup(username, email, password) {
     const errorData = await response.json()
     throw new Error(errorData.error || `Failed to sign up: ${response.status}`)
   }
-  console.log(response)
   return response.json()
 }
 
@@ -37,7 +36,6 @@ async function login(username, password) {
     const errorData = await response.json()
     throw new Error(errorData.error || `Failed to log in: ${response.status}`)
   }
-  console.log(response)
   return response.json()
 }
 
@@ -52,7 +50,6 @@ async function becomeAuthor(passcode) {
     const errorData = await response.json()
     throw new Error(errorData.error || `Failed to become author: ${response.status}`)
   }
-  console.log(response)
   return response.json()
 }
 
@@ -60,9 +57,8 @@ async function getAllBlogPosts() {
     const response = await fetch(`${API_URL}/blogPosts`, { mode: 'cors' })
     if (!response.ok) {
       const errorData = await response.json()
-      throw new Error(errorData.error || `Failed to find published blog posts: ${response.status}`)
+      throw new Error(errorData.error || `Failed to find all blog posts: ${response.status}`)
     }
-    console.log(response)
     return response.json()
 }
 
@@ -72,7 +68,6 @@ async function getBlogPost(blogPostId) {
     const errorData = await response.json()
     throw new Error(errorData.error || `Failed to find blog post ${blogPostId}: ${response.status}`)
   }
-  console.log(response)
   return response.json()
 }
 
@@ -82,7 +77,6 @@ async function getAllCommentsForPost(blogPostId) {
     const errorData = await response.json()
     throw new Error(errorData.error || `Failed to find comments for blog post ${blogPostId}: ${response.status}`)
   }
-  console.log(response)
   return response.json()
 }
 
@@ -97,7 +91,6 @@ async function createComment(content, blogPostId) {
     const errorData = await response.json()
     throw new Error(errorData.error || `Failed to post comment: ${response.status}`)
   }
-  console.log(response)
   return response.json()
 }
 
@@ -112,7 +105,6 @@ async function updateComment(commentId, content) {
     const errorData = await response.json()
     throw new Error(errorData.error || `Failed to update comment: ${response.status}`)
   }
-  console.log(response)
   return response.json()
 }
 
@@ -126,7 +118,6 @@ async function deleteComment(commentId) {
     const errorData = await response.json()
     throw new Error(errorData.error || `Failed to delete comment: ${response.status}`)
   }
-  console.log(response)
   return response.status === 204 ? {} : response.json()
 }
 

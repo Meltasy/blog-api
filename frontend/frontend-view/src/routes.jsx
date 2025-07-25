@@ -9,8 +9,9 @@ import { getAllBlogPosts, getAllCommentsForPost } from './api'
 const allBlogPostsWithCommentsLoader = async () => {
   try {
     const allBlogPosts = await getAllBlogPosts()
+    const publishedBlogPosts = allBlogPosts.filter(post => post.published === true)
     const blogPostsWithComments = await Promise.all(
-      allBlogPosts.map(async (post) => {
+      publishedBlogPosts.map(async (post) => {
         try {
           const comments = await getAllCommentsForPost(post.id)
           return { ...post, comments }
@@ -19,7 +20,7 @@ const allBlogPostsWithCommentsLoader = async () => {
         }
       })
     )
-    return { allBlogPosts: blogPostsWithComments }
+    return { publishedBlogPosts: blogPostsWithComments }
   } catch (error) {
     throw new Error('Failed to load blog posts with comments.')
   }

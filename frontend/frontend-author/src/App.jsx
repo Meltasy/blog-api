@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import GlobalStyles from './globalStyles'
-import styled from 'styled-components'
 import { Outlet } from 'react-router-dom'
 import Navbar from './components/navbar'
 import { getCurrentUser } from './utils/authenticate'
+import styled from 'styled-components'
 
 const Wrapper = styled.main`
   margin-top: 8rem;
@@ -29,14 +28,18 @@ function App() {
     setUser(userData)
   }
 
+  const handleLogout = () => {
+    setUser(null)
+    localStorage.removeItem('token')
+  }
+
   if (loading) {
     return <div>Loading ...</div>
   }
 
   return (
     <>
-      <GlobalStyles />
-      <Navbar user={user} />
+      <Navbar user={user} onLogout={handleLogout} />
       <Wrapper>
         <Outlet context={{ user, onUserUpdate: handleUserUpdate }}/>
       </Wrapper>

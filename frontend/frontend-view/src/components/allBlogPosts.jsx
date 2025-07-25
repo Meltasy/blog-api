@@ -16,12 +16,12 @@ const StyledDiv = styled.div`
   margin-top: 2rem;
 `
 
-function AllBlogPosts({ allBlogPosts, onPostSelect }) {
+function AllBlogPosts({ publishedBlogPosts, onPostSelect }) {
   return (
     <>
-      {allBlogPosts.length > 0 ? (
+      {publishedBlogPosts.length > 0 ? (
         <StyledList>
-          {allBlogPosts.map((post) => (
+          {publishedBlogPosts.map((post) => (
             <BlogPost key={post.id} post={post} onSelect={() => onPostSelect(post)} />
           ))}
         </StyledList>

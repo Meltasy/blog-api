@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
+import { getCurrentUser } from './utils/authenticate'
+import Navbar from './components/navbar'
 import GlobalStyles from './globalStyles'
 import styled from 'styled-components'
-import { Outlet } from 'react-router-dom'
-import Navbar from './components/navbar'
-import { getCurrentUser } from './utils/authenticate'
 
 const Wrapper = styled.main`
   margin-top: 8rem;

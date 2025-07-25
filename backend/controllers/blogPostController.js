@@ -4,25 +4,11 @@ const prisma = new PrismaClient()
 const getAllBlogPosts = async (req, res) => {
   try {
     const allBlogPosts = await prisma.post.findMany({
-      where: { published: true },
       include: { author: true, comments: true }
     })
     res.status(200).json(allBlogPosts)
   } catch (err) {
     console.error('Error finding published blog posts.', err)
-    res.status(500).json({ error: 'Database error occurred.' })
-  }
-}
-
-const getDraftBlogPosts = async (req, res) => {
-  try {
-    const draftBlogPosts = await prisma.post.findMany({
-      where: { published: false },
-      include: { author: true }
-    })
-    res.status(200).json(draftBlogPosts)
-  } catch (err) {
-    console.error('Error finding draft blog posts.', err)
     res.status(500).json({ error: 'Database error occurred.' })
   }
 }
@@ -94,7 +80,6 @@ const deleteBlogPost = async (req, res) => {
 
 module.exports = {
   getAllBlogPosts,
-  getDraftBlogPosts,
   getBlogPost,
   createBlogPost,
   updateBlogPost,

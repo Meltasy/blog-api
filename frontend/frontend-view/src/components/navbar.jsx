@@ -50,8 +50,8 @@ function Navbar({ user, onLogout }) {
     onLogout()
   }
 
-  const AUTHOR_URL = import.meta.env.VITE_AUTHOR_URL
   const isAuthor = user && user.role === 'AUTHOR'
+  const AUTHOR_URL = import.meta.env.VITE_AUTHOR_URL
 
   return (
     <nav>
@@ -67,11 +67,11 @@ function Navbar({ user, onLogout }) {
           )}
           {isAuthor && (
             <div>
-              <StyledBridge href={`${AUTHOR_URL}`}>Author Dashboard</StyledBridge>
+              <StyledBridge href={`${AUTHOR_URL}/login`}>Author Log in</StyledBridge>
             </div>
           )}
           <div>
-            <StyledButton onClick={handleLogout}>Logout</StyledButton>
+            <StyledButton onClick={handleLogout}>Log out</StyledButton>
           </div>
         </>
       ) : (

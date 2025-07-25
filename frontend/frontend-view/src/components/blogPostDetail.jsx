@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  align-self: space-between;
+  justify-content: space-between;
 `
 
 const ButtonWrapper = styled.div`
@@ -96,21 +96,21 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
       blogPostId: post.id,
       user: { username: currentUser.username }
     }
-    setComments(previous => [...previous, optimisticComment])
+    setComments(prev => [...prev, optimisticComment])
     setNewComment('')
-    setLoading(previous => ({ ...previous, create: true }))
+    setLoading(prev => ({ ...prev, create: true }))
     try {
       const createdComment = await createComment(newComment, post.id)
-      setComments(previous => previous.map(comment =>
+      setComments(prev => prev.map(comment =>
         comment.id === tempId ? createdComment : comment
       ))
       onCommentAdded(post.id, createdComment)
       setError('')
     } catch (err) {
-      setComments(previous => previous.filter(comment => comment.id !== tempId))
+      setComments(prev => prev.filter(comment => comment.id !== tempId))
       setError(err.message)
     } finally {
-      setLoading(previous => ({ ...previous, create: false }))
+      setLoading(prev => ({ ...prev, create: false }))
     }
   }
 
@@ -130,25 +130,25 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
     }
     const originalComment = comments.find(comment => comment.id === commentId)
     const updatedComment = { ...originalComment, content: editContent }
-    setComments(previous => previous.map(comment =>
+    setComments(prev => prev.map(comment =>
       comment.id ===commentId ? updatedComment : comment
     ))
     setEditingId(null)
-    setLoading(previous => ({ ...previous, [commentId]: true }))
+    setLoading(prev => ({ ...prev, [commentId]: true }))
     try {
       const serverUpdatedComment = await updateComment(commentId, editContent)
-      setComments(previous => previous.map(comment =>
+      setComments(prev => prev.map(comment =>
         comment.id === commentId ? serverUpdatedComment : comment
       ))
       onCommentUpdated(post.id, commentId, serverUpdatedComment)
       setError('')
     } catch (err) {
-      setComments(previous => previous.map(comment =>
+      setComments(prev => prev.map(comment =>
         comment.id === commentId ? originalComment : comment
       ))
       setError(err.message)
     } finally {
-      setLoading(previous => ({ ...previous, [commentId]: false }))
+      setLoading(prev => ({ ...prev, [commentId]: false }))
     }
   }
 
@@ -157,8 +157,8 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
       return
     }
     const originalComments = comments
-    setComments(previous => previous.filter(comment => comment.id !== commentId))
-    setLoading(previous => ({ ...previous, [commentId]: true }))
+    setComments(prev => prev.filter(comment => comment.id !== commentId))
+    setLoading(prev => ({ ...prev, [commentId]: true }))
     try {
       await deleteComment(commentId)
       onCommentDeleted(post.id, commentId)
@@ -167,7 +167,7 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
       setComments(originalComments)
       setError(err.message)
     } finally {
-      setLoading(previous => ({ ...previous, [commentId]: false }))
+      setLoading(prev => ({ ...prev, [commentId]: false }))
     }
   }
 

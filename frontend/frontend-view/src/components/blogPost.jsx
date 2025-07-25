@@ -5,9 +5,10 @@ const StyledItem = styled.li`
   padding: 1rem;
   color: var(--background-color);
   background-color: var(--primary-color);
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  align-self: space-between;
+  justify-content: space-between;
 `
 
 const ButtonWrapper = styled.div`

@@ -1,4 +1,5 @@
-import { getCurrentUser, canModifyPost } from '../utils/authenticate'
+import { useState } from 'react'
+import { deleteBlogPost } from '../api'
 import BlogPost from './blogPost'
 import styled from 'styled-components'
 
@@ -18,33 +19,30 @@ const StyledDiv = styled.div`
 `
 
 function AllBlogPosts({ allBlogPosts, onPostSelect, onPostDeleted }) {
-  const [blogPosts, setBlogPosts] = useState(allBlogPosts || [])
   const [loading, setLoading] = useState({})
   const [error, setError] = useState('')
-
-  const currentUser = getCurrentUser()
 
   const handleDeletePost = async (postId) => {
     if (!confirm('Are you sure you want to delete this post?')) {
       return
     }
-    const originalPosts = posts
-    setBlogPosts(previous => previous.filter(post => post.id !== postId))
-    setLoading(previous => ({ ...previous, [postId]: true }))
+    setLoading(prev => ({ ...prev, [postId]: true }))
     try {
-      await deletePost(postId)
+      await deleteBlogPost(postId)
       onPostDeleted(postId)
       setError('')
     } catch (err) {
-      setPosts(originalPosts)
       setError(err.message)
     } finally {
-      setLoading(previous => ({ ...previous, [postId]: false }))
+      setLoading(prev => ({ ...prev, [postId]: false }))
     }
   }
 
   return (
     <>
+      <div className='errorBox'>
+        {error && <div className='errors'>{error}</div>}
+      </div>
       {allBlogPosts.length > 0 ? (
         <StyledList>
           {allBlogPosts.map((post) => (
@@ -52,8 +50,9 @@ function AllBlogPosts({ allBlogPosts, onPostSelect, onPostDeleted }) {
               key={post.id}
               post={post}
               onSelect={() => onPostSelect(post)}
-              deletePost={() => handleDeletePost(post.id)}/>
-
+              deleteBlogPost={() => handleDeletePost(post.id)}
+              isLoading={loading[post.id]}
+            />
           ))}
         </StyledList>
       ) : (

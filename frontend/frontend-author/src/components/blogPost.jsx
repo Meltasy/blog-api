@@ -5,9 +5,10 @@ const StyledItem = styled.li`
   padding: 1rem;
   color: var(--background-color);
   background-color: var(--primary-color);
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  align-self: space-between;
+  justify-content: space-between;
 `
 
 const DateWrapper = styled.div`
@@ -22,11 +23,14 @@ const Published = styled.p`
   color: var(--secondary-color);
 `
 
-const ButtonWrapper = styled.div`
-  align-self: flex-end;
+const ButtonsWrapper = styled.div`
+  display: flex;
+  margin: 1rem 0;
+  gap: 1rem;
+  justify-content: flex-end;
 `
 
-function BlogPost({ post, onSelect, deletePost }) {
+function BlogPost({ post, onSelect, deleteBlogPost, isLoading }) {
   const isPublished = post.published ? 'Published' : 'Not yet published'
 
   const formatDate = (dateString) => {
@@ -41,28 +45,26 @@ function BlogPost({ post, onSelect, deletePost }) {
   }
 
   return (
-    <StyledItem key={post.id}>
+    <StyledItem>
       <div>
         <h2>{post.title}</h2>
         <p>{post.content}</p>
-        <p>{post.author}</p>
+        <p>{post.author.username}</p>
       </div>
       <DateWrapper>
         <p>{formatDate(post.createdAt)}</p>
       </DateWrapper>
       <div>
-        <Published>
-          {isPublished}
-        </Published>
+        <Published>{isPublished}</Published>
       </div>
-      <ButtonWrapper>
+      <ButtonsWrapper>
         <button className='button' onClick={onSelect}>
           Edit
         </button>
-        <button className='button' onClick={deletePost}>
-          Delete
+        <button className='button' onClick={deleteBlogPost} disabled={isLoading}>
+          {isLoading ? 'Deleting...' : 'Delete'}
         </button>
-      </ButtonWrapper>
+      </ButtonsWrapper>
     </StyledItem>
   )
 }

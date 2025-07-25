@@ -47,11 +47,7 @@ const canModifyComment = (comment) => {
   if (!currentUser) {
     return false
   }
-  return comment.userId === currentUser.id || currentUser.role === 'AUTHOR'
-}
-
-const isAuthenticated = () => {
-  return getCurrentUser() !== null
+  return comment.userId === currentUser.id
 }
 
 const getUserHeader = () => {
@@ -67,7 +63,6 @@ const logout = () => {
 export {
   getCurrentUser,
   canModifyComment,
-  isAuthenticated,
   getUserHeader,
   logout
 }

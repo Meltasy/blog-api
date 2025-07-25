@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { deleteBlogPost } from '../api'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -9,13 +11,13 @@ const Wrapper = styled.div`
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  align-self: space-between;
+  justify-content: space-between;
 `
 
 const DateWrapper = styled.div`
   font-size: 0.8rem;
   font-style: italic;
-  font-weight: bold;
+  font-weight: 700;
 `
 
 const Published = styled.p`
@@ -24,12 +26,35 @@ const Published = styled.p`
   color: var(--secondary-color);
 `
 
-const ButtonWrapper = styled.div`
-  align-self: flex-end;
+const ButtonsWrapper = styled.div`
+  display: flex;
+  margin: 1rem 0;
+  gap: 1rem;
+  justify-content: flex-end;
 `
 
-function BlogPostDetail({ post, onReturn }) {
+function BlogPostDetail({ post, onReturn, onPostDeleted }) {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
   const isPublished = post.published ? 'Published' : 'Not yet published'
+
+  const handleDelete = async () => {
+    if (!confirm('Are you sure you want to delete this post?')) {
+      return
+    }
+    setLoading(true)
+    setError('')
+    try {
+      await deleteBlogPost(post.id)
+      onPostDeleted(post.id)
+      onReturn()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -43,11 +68,11 @@ function BlogPostDetail({ post, onReturn }) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper key={post.id}>
       <div>
         <h2>{post.title}</h2>
         <p>{post.content}</p>
-        <p>{post.author}</p>
+        <p>{post.author.username}</p>
       </div>
       <DateWrapper>
         <p>{formatDate(post.createdAt)}</p>
@@ -57,11 +82,17 @@ function BlogPostDetail({ post, onReturn }) {
           {isPublished}
         </Published>
       </div>
-      <ButtonWrapper>
+      <div className='errorBox'>
+        {error && <div className='errors'>{error}</div>}
+      </div>
+      <ButtonsWrapper>
         <button className='button' onClick={onReturn}>
           Return to Blog posts
         </button>
-      </ButtonWrapper>
+        <button className='button' onClick={handleDelete} disabled={loading}>
+          {loading ? 'Deleting...' : 'Delete'}
+        </button>
+      </ButtonsWrapper>
     </Wrapper>
   )
 }

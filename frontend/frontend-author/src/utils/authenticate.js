@@ -42,27 +42,18 @@ const getCurrentUser = () => {
   } : null
 }
 
-const canModifyPost = (post) => {
-  const currentUser = getCurrentUser()
-  if (!currentUser) {
-    return false
-  }
-  return comment.userId === currentUser.id || currentUser.role === 'AUTHOR'
-}
-
-// Need to change this to only accept users if they are authors ...
-const isAuthenticated = () => {
-  return getCurrentUser() !== null
-}
-
 const getUserHeader = () => {
   const token = localStorage.getItem('token')
   return token ? { Authorization: `Bearer ${token}` }: {}
 }
 
+const logout = () => {
+  localStorage.removeItem('token')
+  window.location.href = '/login'
+}
+
 export {
   getCurrentUser,
-  canModifyPost,
-  isAuthenticated,
-  getUserHeader
+  getUserHeader,
+  logout
 }

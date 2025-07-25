@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { logout } from '../utils/authenticate'
 import styled from 'styled-components'
 
 const baseStyles = `
@@ -35,18 +36,43 @@ const StyledBridge = styled.a`
   ${linkStyles}
 `
 
-function Navbar({ user }) {
+const StyledButton = styled.button`
+  ${baseStyles}
+  &:hover {
+    color: var(--primary-color-dark);
+    background-color: var(--primary-color-light);
+  }
+`
+
+function Navbar({ user, onLogout }) {
+  const handleLogout = () => {
+    logout()
+    onLogout()
+  }
+
   const VIEW_URL = import.meta.env.VITE_VIEW_URL
   const isAuthor = user && user.role === 'AUTHOR'
 
   return (
     <nav>
       <div>
-        <StyledBridge href={`${VIEW_URL}`}>Home</StyledBridge>
+        <StyledBridge href={`${VIEW_URL}`}>Main Blog</StyledBridge>
       </div>
-      {isAuthor && (
+      {isAuthor ? (
+        <>
+          <div>
+            <StyledLink to='/blogPosts'>Blog Posts</StyledLink>
+          </div>
+          <div>
+            <StyledLink to='/newPost'>Create Post</StyledLink>
+          </div>
+          <div>
+            <StyledButton onClick={handleLogout}>Log out</StyledButton>
+          </div>
+        </>
+      ) : (
         <div>
-          <StyledLink to='/blogPosts'></StyledLink>
+          <StyledLink to='/login'>Log in</StyledLink>
         </div>
       )}
     </nav>
