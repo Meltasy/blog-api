@@ -7,6 +7,7 @@ blogPostRouter.get('/', blogPostController.getAllBlogPosts)
 blogPostRouter.get('/:id', blogPostController.getBlogPost)
 blogPostRouter.post('/newPost', authenticate, authorizeRole, blogPostController.createBlogPost)
 blogPostRouter.put('/:id', authenticate, authorizeRole, blogPostController.updateBlogPost)
+blogPostRouter.patch('/:id', authenticate, authorizeRole, blogPostController.publishBlogPost)
 blogPostRouter.delete('/:id', authenticate, authorizeRole, blogPostController.deleteBlogPost)
 
 module.exports = blogPostRouter

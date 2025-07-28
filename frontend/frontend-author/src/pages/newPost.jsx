@@ -109,7 +109,7 @@ function NewPost() {
             name='content'
             placeholder='Write your bog post here ...'
             rows='10'
-            columns='150'
+            cols='50'
             autoComplete='off'
             value={content}
             onChange={handleContentChange}

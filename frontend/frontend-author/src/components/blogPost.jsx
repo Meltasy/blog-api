@@ -11,16 +11,19 @@ const StyledItem = styled.li`
   justify-content: space-between;
 `
 
-const DateWrapper = styled.div`
-  font-size: 0.8rem;
-  font-style: italic;
-  font-weight: bold;
+const InfoWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
-const Published = styled.p`
+const Author = styled.p`
+  font-weight: 700;
+`
+
+const DateText = styled.p`
+  font-size: 0.8rem;
   font-style: italic;
-  font-weight: bold;
-  color: var(--secondary-color);
+  font-weight: 700;
 `
 
 const ButtonsWrapper = styled.div`
@@ -30,8 +33,7 @@ const ButtonsWrapper = styled.div`
   justify-content: flex-end;
 `
 
-function BlogPost({ post, onSelect, deleteBlogPost, isLoading }) {
-  const isPublished = post.published ? 'Published' : 'Not yet published'
+function BlogPost({ post, onSelect, togglePublish, deleteBlogPost, isPublishLoading, isLoading }) {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -47,24 +49,29 @@ function BlogPost({ post, onSelect, deleteBlogPost, isLoading }) {
   return (
     <StyledItem>
       <div>
-        <h2>{post.title}</h2>
+        <h3>{post.title}</h3>
         <p>{post.content}</p>
-        <p>{post.author.username}</p>
       </div>
-      <DateWrapper>
-        <p>{formatDate(post.createdAt)}</p>
-      </DateWrapper>
-      <div>
-        <Published>{isPublished}</Published>
-      </div>
-      <ButtonsWrapper>
-        <button className='button' onClick={onSelect}>
-          Edit
-        </button>
-        <button className='button' onClick={deleteBlogPost} disabled={isLoading}>
-          {isLoading ? 'Deleting...' : 'Delete'}
-        </button>
-      </ButtonsWrapper>
+      <InfoWrapper>
+        <div>
+          <Author>{post.author.username}</Author>
+          <DateText>{formatDate(post.createdAt)}</DateText>
+        </div>
+        <ButtonsWrapper>
+          <button className='button' onClick={togglePublish} disabled={isPublishLoading}>
+            {isPublishLoading
+              ? (post.published ? 'Unpublishing...' : 'Pulishing...')
+              : (post.published ? 'Unpublish' : 'Publish')
+            }
+          </button>
+          <button className='button' onClick={onSelect}>
+            Edit
+          </button>
+          <button className='button' onClick={deleteBlogPost} disabled={isLoading}>
+            {isLoading ? 'Deleting...' : 'Delete'}
+          </button>
+        </ButtonsWrapper>
+      </InfoWrapper>
     </StyledItem>
   )
 }

@@ -47,7 +47,17 @@ const GlobalStyles = createGlobalStyle`
   }
 
   h2 {
+    font-size: 3rem;
+    color: var(--primary-color);
+    text-align: center;
+  }
+
+  h3 {
     font-size: 2rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
   }
 
   ul {

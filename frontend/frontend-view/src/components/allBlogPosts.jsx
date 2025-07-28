@@ -26,7 +26,7 @@ function AllBlogPosts({ publishedBlogPosts, onPostSelect }) {
           ))}
         </StyledList>
       ) : (
-        <StyledDiv>There are no blog posts in the list!</StyledDiv>
+        <StyledDiv>There are no published blog posts!</StyledDiv>
       )
     }
     </>

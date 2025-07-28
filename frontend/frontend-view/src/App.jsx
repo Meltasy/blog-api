@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { getCurrentUser } from './utils/authenticate'
 import Navbar from './components/navbar'
-import GlobalStyles from './globalStyles'
 import styled from 'styled-components'
 
 const Wrapper = styled.main`
@@ -40,7 +39,6 @@ function App() {
 
   return (
     <>
-      <GlobalStyles />
       <Navbar user={user} onLogout={handleLogout} />
       <Wrapper>
         <Outlet context={{ user, onUserUpdate: handleUserUpdate }}/>

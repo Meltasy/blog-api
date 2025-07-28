@@ -44,7 +44,7 @@ const Comment = styled.div`
 const UserDateWrapper = styled.div`
   font-size: 0.8rem;
   font-style: italic;
-  font-weight: bold;
+  font-weight: 700;
 `
 
 const ButtonsWrapper = styled.div`
@@ -185,11 +185,11 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
   return (
     <Wrapper>
       <div>
-        <h2>{post.title}</h2>
+        <h3>{post.title}</h3>
         <p>{post.content}</p>
       </div>
       <CommentWrapper>
-        <h3>Comments ({comments.length})</h3>
+        <h4>Comments ({comments.length})</h4>
         {error && (
           <div className='errors'>
             {error}
@@ -200,7 +200,7 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
             <NewCommentWrapper>
               <textarea
                 rows='3'
-                columns='80'
+                cols='50'
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
                 placeholder='Add a comment ...'
@@ -237,7 +237,7 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
                     <NewCommentWrapper>
                       <textarea
                         rows='3'
-                        columns='80'
+                        cols='50'
                         value={editContent}
                         onChange={(e) => setEditContent(e.target.value)}
                         autoFocus
@@ -265,7 +265,7 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
       </CommentWrapper>
       <ButtonWrapper>
         <button className='button' onClick={onReturn}>
-          Return to Blog posts
+          Return to Blog Posts
         </button>
       </ButtonWrapper>
     </Wrapper>

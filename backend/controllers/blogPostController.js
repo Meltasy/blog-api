@@ -4,7 +4,8 @@ const prisma = new PrismaClient()
 const getAllBlogPosts = async (req, res) => {
   try {
     const allBlogPosts = await prisma.post.findMany({
-      include: { author: true, comments: true }
+      include: { author: true, comments: true },
+      orderBy: { createdAt: 'desc' }
     })
     res.status(200).json(allBlogPosts)
   } catch (err) {
@@ -21,7 +22,7 @@ const getBlogPost = async (req, res) => {
       include: { author: true, comments: true }
     })
     if (!blogPost) {
-      return res.status(404).json({ error: 'No blog post found.'})
+      return res.status(404).json({ error: 'No blog post found.' })
     }
     res.status(200).json(blogPost)
   } catch (err) {
@@ -53,7 +54,8 @@ const updateBlogPost = async (req, res) => {
   try {
     const blogPost = await prisma.post.update({
       where: { id: blogPostId },
-      data: { title, content, published }
+      data: { title, content, published },
+      include: { author: true }
     })
     res.status(200).json(blogPost)
   } catch (err) {
@@ -62,6 +64,22 @@ const updateBlogPost = async (req, res) => {
       return res.status(400).json({ error: 'This title already exsists.' })
     }
     res.status(500).json({ error: 'Failed to update blog post.' })
+  }
+}
+
+const publishBlogPost = async (req, res) => {
+  const blogPostId = req.params.id
+  const { published } = req.body
+  try {
+    const blogPost = await prisma.post.update({
+      where: { id: blogPostId },
+      data: { published },
+      include: { author: true }
+    })
+    res.status(200).json(blogPost)
+  } catch (err) {
+    console.error('Error publishing blog post:', err)
+    res.status(500).json({ error: 'Failed to publish blog post.' })
   }
 }
 
@@ -74,7 +92,7 @@ const deleteBlogPost = async (req, res) => {
     res.status(204).json(blogPost)
   } catch (err) {
     console.error('Error deleting blog post:', err)
-    res.status(500).json({ error: 'Failed to delete blog post.'})
+    res.status(500).json({ error: 'Failed to delete blog post.' })
   }
 }
 
@@ -83,5 +101,6 @@ module.exports = {
   getBlogPost,
   createBlogPost,
   updateBlogPost,
+  publishBlogPost,
   deleteBlogPost
 }

@@ -6,7 +6,8 @@ const getAllCommentsForPost = async (req, res) => {
   try {
     const allComments = await prisma.comment.findMany({
       where: { blogPostId },
-      include: { user: true }
+      include: { user: true },
+      orderBy: { createdAt: 'desc' }
     })
     res.status(200).json(allComments)
   } catch (err) {

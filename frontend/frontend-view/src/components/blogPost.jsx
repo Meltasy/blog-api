@@ -17,7 +17,7 @@ const ButtonWrapper = styled.div`
 
 const CommentCount = styled.p`
   font-style: italic;
-  font-weight: bold;
+  font-weight: 700;
   color: var(--secondary-color);
 `
 
@@ -27,7 +27,7 @@ function BlogPost({ post, onSelect }) {
   return (
     <StyledItem key={post.id}>
       <div>
-        <h2>{post.title}</h2>
+        <h3>{post.title}</h3>
         <p>{post.content}</p>
       </div>
       <div>

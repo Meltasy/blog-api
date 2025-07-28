@@ -1,7 +1,7 @@
 import { useLoaderData } from 'react-router-dom'
 import { useState } from 'react'
 import AllBlogPosts from '../components/allBlogPosts'
-import BlogPostDetail from '../components/blogPostDetail'
+import EditPost from './editPost'
 
 function BlogPosts() {
   const { allBlogPosts: initialBlogPosts } = useLoaderData()
@@ -14,6 +14,14 @@ function BlogPosts() {
 
   const handleReturnAll = () => {
     setSelectedPost(null)
+  }
+
+  const handlePostUpdated = (updatedPost) => {
+    setAllBlogPosts(prevPosts => {
+      return prevPosts.map(post =>
+        post.id === updatedPost.id ? updatedPost : post
+      )
+    })
   }
 
   const handlePostDeleted = (postId) => {
@@ -29,16 +37,17 @@ function BlogPosts() {
       </header>
       <main>
         {selectedPost ? (
-          <BlogPostDetail
+          <EditPost
             post={selectedPost}
             onReturn={handleReturnAll}
-            onPostDeleted={handlePostDeleted}
+            onPostUpdated={handlePostUpdated}
           />
         ) : (
           <AllBlogPosts
             allBlogPosts={allBlogPosts}
             onPostSelect={handlePostSelect}
             onPostDeleted={handlePostDeleted}
+            onPostUpdated={handlePostUpdated}
           />
         )}
       </main>
