@@ -50,6 +50,7 @@ const GlobalStyles = createGlobalStyle`
     font-size: 3rem;
     color: var(--primary-color);
     text-align: center;
+    margin: 0;
   }
 
   h3 {
@@ -97,6 +98,12 @@ const GlobalStyles = createGlobalStyle`
     padding: 0.5rem 1rem;
     min-width: 400px;
   }
+
+input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+  accent-color: var(--primary-color-dark);
+}
 
   .buttonBox {
     align-self: center;

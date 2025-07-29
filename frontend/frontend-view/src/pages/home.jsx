@@ -66,7 +66,7 @@ function Home() {
   return (
     <>
       <header>
-        <h1>Zena's blog</h1>
+        <h1>Stories from the East</h1>
       </header>
       <main>
         {selectedPost ? (

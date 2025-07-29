@@ -54,6 +54,13 @@ const ButtonsWrapper = styled.div`
   justify-content: flex-end;
 `
 
+const BtnsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-end;
+`
+
 const LoadingSpinner = styled.div`
   display: inline-block;
   width: 12px;
@@ -242,14 +249,14 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
                         onChange={(e) => setEditContent(e.target.value)}
                         autoFocus
                       />
-                      <ButtonsWrapper>
+                      <BtnsWrapper>
                         <button className='button' type='submit'>
                           Save
                         </button>
                         <button className='button' type='button' onClick={handleEditCancel}>
                           Cancel
                         </button>
-                      </ButtonsWrapper>
+                      </BtnsWrapper>
                     </NewCommentWrapper>
                   </form>
                 ) : (

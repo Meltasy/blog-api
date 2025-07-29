@@ -10,12 +10,20 @@ const Content = styled.textarea`
   min-width: 600px;
 `
 
+const LabelWrapper = styled.label`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+`
+
 const Checkbox = styled.input`
   min-height: 25px;
   min-width: 25px;
+  cursor: pointer;
 `
 
 const ButtonsWrapper = styled.div`
+  width: 100%;
   display: flex;
   margin: 1rem 0;
   gap: 1rem;
@@ -121,7 +129,7 @@ function EditPost({ post, onReturn, onPostUpdated }) {
         <div className='errorBox'>
           {errors.content && <div className='errors'>{errors.content}</div>}
         </div>
-        <label htmlFor='published'>
+        <LabelWrapper htmlFor='published'>
           <Checkbox
             id='published'
             name='published'
@@ -130,10 +138,10 @@ function EditPost({ post, onReturn, onPostUpdated }) {
             onChange={(e) => setIsPublished(e.target.checked)}
           />
           Publish immediately
-        </label>
+        </LabelWrapper>
         <ButtonsWrapper>
           <button className='button' onClick={onReturn}>
-            Return to Blog Posts
+            Cancel
           </button>
           <button className='button' type='submit' disabled={loading}>
             {loading ? 'saving ...' : 'Save'}

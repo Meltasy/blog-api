@@ -8,12 +8,6 @@ const Wrapper = styled.main`
   margin-top: 8rem;
 `
 
-// User frontend:
-// Sign Up and Log In
-// Display published blog posts and comments
-// Create, edit and delete own comments
-// Become author redirects to /home ... but will need to give access to other frontend
-
 function App() {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)

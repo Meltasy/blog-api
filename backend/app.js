@@ -3,10 +3,6 @@ const cors = require('cors')
 const path = require('path')
 const app = express()
 
-// For reference:
-// https://github.com/Botifywm/BlogAPI/tree/main
-// https://github.com/Exemption6877/odin-blog-api/tree/main
-
 const userRouter = require('./routes/userRouter')
 const blogPostRouter = require('./routes/blogPostRouter')
 const commentRouter = require('./routes/commentRouter')

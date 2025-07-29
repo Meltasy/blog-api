@@ -50,6 +50,7 @@ const GlobalStyles = createGlobalStyle`
     font-size: 3rem;
     color: Var(--primary-color);
     text-align: center;
+    margin: 0;
   }
 
   h3 {

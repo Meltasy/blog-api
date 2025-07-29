@@ -8,12 +8,6 @@ const Wrapper = styled.main`
   margin-top: 8rem;
 `
 
-// Author frontend:
-// Log in
-// Display blog posts - both published and unpublished
-// Create blog posts
-// Edit and delete blog posts
-
 function App() {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)

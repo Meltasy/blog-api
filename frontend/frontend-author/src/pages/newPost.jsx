@@ -12,9 +12,16 @@ const Content = styled.textarea`
   min-width: 600px;
 `
 
+const LabelWrapper = styled.label`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+`
+
 const Checkbox = styled.input`
   min-height: 25px;
   min-width: 25px;
+  cursor: pointer;
 `
 
 function NewPost() {
@@ -118,7 +125,7 @@ function NewPost() {
           <div className='errorBox'>
             {errors.content && <div className='errors'>{errors.content}</div>}
           </div>
-          <label htmlFor='published'>
+          <LabelWrapper htmlFor='published'>
             <Checkbox
               id='published'
               name='published'
@@ -127,7 +134,7 @@ function NewPost() {
               onChange={(e) => setIsPublished(e.target.checked)}
             />
             Publish immediately
-          </label>
+          </LabelWrapper>
           <div className='buttonBox'>
             <button className='button' type='submit' disabled={loading}>
               {loading ? 'saving ...' : 'Save'}

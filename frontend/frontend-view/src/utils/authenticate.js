@@ -47,7 +47,7 @@ const canModifyComment = (comment) => {
   if (!currentUser) {
     return false
   }
-  return comment.userId === currentUser.id
+  return comment.userId === currentUser.id || currentUser.role === 'AUTHOR'
 }
 
 const getUserHeader = () => {
