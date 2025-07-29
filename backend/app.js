@@ -20,13 +20,13 @@ app.use('/comments', commentRouter)
 app.use('/view', express.static(path.join(__dirname, '../frontend-view/dist')))
 app.use('/author', express.static(path.join(__dirname, '../frontend-author/dist')))
 
-// Only use in production:
-// app.get('/view/*', (req, res) => {
-//   res.sendFile(path.join(__dirname, './frontend-view/dist', 'index.html'))
-// })
-// app.get('/author/*', (req, res) => {
-//   res.sendFile(path.join(__dirname, './frontend-author/dist', 'index.html'))
-// })
+// Only use in production
+app.get('/view/*', (req, res) => {
+  res.sendFile(path.join(__dirname, './frontend-view/dist', 'index.html'))
+})
+app.get('/author/*', (req, res) => {
+  res.sendFile(path.join(__dirname, './frontend-author/dist', 'index.html'))
+})
 
 // Normally at end - but can sit anywhere
 app.listen(process.env.PORT, '0.0.0.0', () => {
