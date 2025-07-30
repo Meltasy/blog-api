@@ -10,6 +10,9 @@ const allBlogPostsWithCommentsLoader = async () => {
   try {
     const allBlogPosts = await getAllBlogPosts()
     const publishedBlogPosts = allBlogPosts.filter(post => post.published === true)
+    if (publishedBlogPosts.length === 0) {
+      return { publishedBlogPosts: [], isEmpty: true }
+    }
     const blogPostsWithComments = await Promise.all(
       publishedBlogPosts.map(async (post) => {
         try {
@@ -20,7 +23,7 @@ const allBlogPostsWithCommentsLoader = async () => {
         }
       })
     )
-    return { publishedBlogPosts: blogPostsWithComments }
+    return { publishedBlogPosts: blogPostsWithComments, isEmpty: false }
   } catch (error) {
     throw new Error('Failed to load blog posts with comments.')
   }

@@ -17,6 +17,21 @@ app.use('/', userRouter)
 app.use('/blogPosts', blogPostRouter)
 app.use('/comments', commentRouter)
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Backend is running successfully!'})
+})
+
+app.use('/view', express.static(path.join(__dirname, '../frontend-view/dist')))
+app.use('/author', express.static(path.join(__dirname, '../frontend-author/dist')))
+
+// Only use in production
+// app.get('/view/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, './frontend-view/dist', 'index.html'))
+// })
+// app.get('/author/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, './frontend-author/dist', 'index.html'))
+// })
+
 // Normally at end - but can sit anywhere
 app.listen(process.env.PORT, '0.0.0.0', () => {
   console.log(`File uploader app - listening on port ${process.env.PORT}`)

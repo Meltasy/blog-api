@@ -4,7 +4,7 @@ import AllBlogPosts from '../components/allBlogPosts.jsx'
 import BlogPostDetail from '../components/blogPostDetail.jsx'
 
 function Home() {
-  const { publishedBlogPosts: initialBlogPosts } = useLoaderData()
+  const { publishedBlogPosts: initialBlogPosts, isEmpty } = useLoaderData()
   const [publishedBlogPosts, setPublishedBlogPosts] = useState(initialBlogPosts || [])
   const [selectedPost, setSelectedPost] = useState(null)
 
@@ -61,6 +61,19 @@ function Home() {
         comments: prev.comments.filter(comment => comment.id !== commentId )
       }))
     }
+  }
+
+  if (isEmpty || publishedBlogPosts.length === 0) {
+    return (
+      <>
+        <header>
+          <h1>Stories from the East</h1>
+        </header>
+        <main>
+          <h2>No stories available - check back later!</h2>
+        </main>
+      </>
+    )
   }
 
   return (
