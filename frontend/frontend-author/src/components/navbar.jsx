@@ -72,7 +72,7 @@ function Navbar({ user, onLogout }) {
         </>
       ) : (
         <div>
-          <StyledLink to='/login'>Log in</StyledLink>
+          <StyledLink to='/'>Log in</StyledLink>
         </div>
       )}
     </nav>
