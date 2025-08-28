@@ -67,7 +67,7 @@ function Navbar({ user, onLogout }) {
           )}
           {isAuthor && (
             <div>
-              <StyledBridge href={`${AUTHOR_URL}login`}>Author Log in</StyledBridge>
+              <StyledBridge href={`${AUTHOR_URL}/login`}>Author Log in</StyledBridge>
             </div>
           )}
           <div>

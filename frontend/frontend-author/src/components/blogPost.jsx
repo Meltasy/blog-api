@@ -5,7 +5,7 @@ const StyledItem = styled.li`
   padding: 1rem;
   color: var(--background-color);
   background-color: var(--primary-color);
-  border-radius: 1rem;
+  box-shadow: 2px 2px 2px var(--background-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

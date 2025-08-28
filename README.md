@@ -12,7 +12,7 @@ This project solves these challenges by:
 
 Check out my [blog-api](https://blog-api-view.netlify.app/)!
 
-This blog-api project was built as part of the [Odin Project](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api) curriculum.
+This blog-api project was built as part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api) curriculum.
 
 ***
 
@@ -63,9 +63,9 @@ This blog-api project was built as part of the [Odin Project](https://www.theodi
 1. Clone the repository: `git clone git@github.com:Meltasy/blog-api.git` and `cd blog-api`
 2. Set up the backend: `cd backend` and `npm install`
 3. Configure environment variables with an `.env` file in the root directory:
-    * DATABASE_PUBLIC_URL=<your-database-url>
-    * JWT_SECRET=<your-secret-key>
-    * AUTHOR_PASSCODE=<your-author-passcode>
+    * `DATABASE_PUBLIC_URL="your-database-url"`
+    * `JWT_SECRET="your-secret-key"`
+    * `AUTHOR_PASSCODE="your-author-passcode"`
 4. Set up the database: `npx prisma migrate dev`
 5. Start the backend server: `npm run dev`
 6. Set up the reader frontend: `cd ../frontend-view` and `npm install` and `npm run dev`

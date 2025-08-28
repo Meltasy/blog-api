@@ -6,10 +6,10 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   color: var(--background-color);
   background-color: var(--primary-color);
+  box-shadow: 2px 2px 2px var(--primary-color-light);
   max-width: 60rem;
   padding: 2rem;
   margin: 0 auto;
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -20,10 +20,10 @@ const ButtonWrapper = styled.div`
 `
 
 const CommentWrapper = styled.div`
-  background-color: var(--secondary-color);
+  background-color: var(--secondary-color-dark);
+  box-shadow: 2px 2px 2px var(--secondary-color);
   margin: 2rem 0;
   padding: 1rem;
-  border-radius: 1rem;
 `
 
 const NewCommentWrapper = styled.div`
@@ -33,12 +33,12 @@ const NewCommentWrapper = styled.div`
 `
 
 const Comment = styled.div`
-  color: var(--secondary-color-dark);
-  background-color: var(--secondary-color-light);
+  color: var(--primary-color-dark);
+  background-color: var(--primary-color-light);
   margin: 1rem 0;
   padding: 1rem;
-  border-radius: 1rem;
-  border-left: 20px solid var(--secondary-color-dark);
+  border-left: 20px solid var(--primary-color);
+  box-shadow: 2px 2px 2px var(--primary-color);
 `
 
 const UserDateWrapper = styled.div`

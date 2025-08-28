@@ -1,37 +1,64 @@
 import { createGlobalStyle } from 'styled-components'
+import backgroundImage from './forbidden-city.jpg'
 
 const GlobalStyles = createGlobalStyle`
   :root {
-    --text-color: rgb(0, 25, 0);
+    --text-color: rgb(0, 7, 16);
     --error-text-color: rgb(101, 3, 3);
-    --background-color: rgb(223, 236, 223);
-    --primary-color: rgb(45, 136, 45);
-    --primary-color-light: rgb(122, 192, 122);
-    --primary-color-dark: rgb(2, 80, 2);
-    --secondary-color: rgb(64, 48, 117);
-    --secondary-color-light: rgb(125, 112, 165);
-    --secondary-color-dark: rgb(24, 10, 69);
+    --background-color: rgb(195, 216, 242);
+    --primary-color: rgb(14, 83, 171);
+    --primary-color-light: rgb(76, 126, 191);
+    --primary-color-dark: rgb(7, 50, 106);
+    --secondary-color: rgb(255, 158, 0);
+    --secondary-color-light: rgb(255, 191, 87);
+    --secondary-color-dark: rgb(162, 100, 0);
   }
   
   body {
     font-family: 'Lucida Console', 'Courier New', Courier, monospace;
     font-size: 16px;
     color: var(--text-color);
+    background-image: url(${backgroundImage});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     background-color: var(--background-color);
   }
 
-  nav {
-    background-color: var(--primary-color);
+  nav,
+  footer {
+    background-color: rgb(255, 255, 255, 0.3);
     display: flex;
     justify-content: space-between;
     align-items: center;
     justify-content: center;
     position: fixed;
-    top: 0;
     width: 100%;
-    height: 100px;
     margin: auto;
     gap: 4rem;
+  }
+  
+  nav {
+    top: 0;
+    height: 100px;
+  }
+
+  footer {
+    color: var(--primary-color-dark);
+    font-weight: 700;
+    font-size: 1.2rem;
+    bottom: 0;
+    height: 50px;
+  }
+
+  footer a:link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  footer a:hover,
+  footer a:visited {
+    color: var(--primary-color);
   }
 
   header {
@@ -48,7 +75,7 @@ const GlobalStyles = createGlobalStyle`
 
   h2 {
     font-size: 3rem;
-    color: var(--primary-color);
+    color: Var(--primary-color);
     text-align: center;
     margin: 0;
   }
@@ -58,6 +85,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   h4 {
+    color: var(--secondary-color-light);
     font-size: 1.5rem;
   }
 
@@ -68,10 +96,10 @@ const GlobalStyles = createGlobalStyle`
 
   form {
     background-color: var(--primary-color);
+    box-shadow: 2px 2px 2px var(--primary-color-light);
     width: max-content;
     margin: auto;
     padding: 2rem;
-    border-radius: 1rem;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -92,18 +120,12 @@ const GlobalStyles = createGlobalStyle`
     font-size: 1.2rem;
     color: var(--background-color);
     background-color: var(--primary-color-dark);
+    box-shadow: 2px 2px 2px var(--background-color);
     border: none;
-    border-radius: 0.5rem;
     outline: none;
     padding: 0.5rem 1rem;
     min-width: 400px;
   }
-
-input[type="checkbox"] {
-  box-sizing: border-box;
-  padding: 0;
-  accent-color: var(--primary-color-dark);
-}
 
   .buttonBox {
     align-self: center;
@@ -115,14 +137,15 @@ input[type="checkbox"] {
     font-weight: 700;
     color: var(--background-color);
     background-color: var(--primary-color-dark);
+    box-shadow: 2px 2px 2px var(--background-color);
     border: none;
-    border-radius: 0.5rem;
     outline: none;
     padding: 0.5rem 1rem;
     cursor: pointer;
     &:hover {
       color: var(--primary-color-dark);
       background-color: var(--background-color);
+      box-shadow: 2px 2px 2px var(--primary-color-dark);
     }
   }
 
