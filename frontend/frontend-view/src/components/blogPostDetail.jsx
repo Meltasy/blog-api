@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   background-color: var(--primary-color);
   box-shadow: 2px 2px 2px var(--primary-color-light);
   max-width: 60rem;
-  padding: 2rem;
+  padding: 1rem 1.5rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -21,8 +21,7 @@ const ButtonWrapper = styled.div`
 
 const CommentWrapper = styled.div`
   background-color: var(--secondary-color-dark);
-  box-shadow: 2px 2px 2px var(--secondary-color);
-  margin: 2rem 0;
+  margin-bottom: 1rem;
   padding: 1rem;
 `
 
@@ -36,22 +35,27 @@ const Comment = styled.div`
   color: var(--primary-color-dark);
   background-color: var(--primary-color-light);
   margin: 1rem 0;
-  padding: 1rem;
+  padding: 0.5rem;
   border-left: 20px solid var(--primary-color);
   box-shadow: 2px 2px 2px var(--primary-color);
 `
 
+const ExtrasWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 const UserDateWrapper = styled.div`
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-style: italic;
   font-weight: 700;
 `
 
 const ButtonsWrapper = styled.div`
   display: flex;
-  margin: 1rem 0;
   gap: 1rem;
   justify-content: flex-end;
+  align-items: center;
 `
 
 const BtnsWrapper = styled.div`
@@ -59,6 +63,7 @@ const BtnsWrapper = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   justify-content: flex-end;
+  align-items: center;
 `
 
 const LoadingSpinner = styled.div`
@@ -214,7 +219,7 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
                 disabled={loading.create}
               />
               <button className='button' type='submit' disabled={loading.create || !newComment.trim()}>
-                {loading.create ? <LoadingSpinner /> : 'Post comment'}
+                {loading.create ? <LoadingSpinner /> : 'Post'}
               </button>
             </NewCommentWrapper>
           </form>
@@ -223,19 +228,21 @@ function BlogPostDetail({ post, onReturn, onCommentAdded, onCommentUpdated, onCo
           comments.map((comment) => (
               <Comment key={comment.id}>
                 <p>{comment.content}</p>
-                <UserDateWrapper>
-                  <p>{comment.user?.username || 'Anonymous'}, {formatDate(comment.createdAt)}</p>
-                </UserDateWrapper>
-                {canModifyComment(comment) && (
-                  <ButtonsWrapper>
-                    <button className='button' onClick={() => handleEditStart(comment)} disabled={loading[comment.id]}>
-                      Edit
-                    </button>
-                    <button className='button' onClick={() => handleDeleteComment(comment.id)} disabled={loading[comment.id]}>
-                      Delete
-                    </button>
-                  </ButtonsWrapper>
-                )}
+                <ExtrasWrapper>
+                  <UserDateWrapper>
+                    <p>{comment.user?.username || 'Anonymous'}, {formatDate(comment.createdAt)}</p>
+                  </UserDateWrapper>
+                  {canModifyComment(comment) && (
+                    <ButtonsWrapper>
+                      <button className='button' onClick={() => handleEditStart(comment)} disabled={loading[comment.id]}>
+                        Edit
+                      </button>
+                      <button className='button' onClick={() => handleDeleteComment(comment.id)} disabled={loading[comment.id]}>
+                        Delete
+                      </button>
+                    </ButtonsWrapper>
+                  )}
+                </ExtrasWrapper>
                 {editingId === comment.id ? (
                   <form onSubmit={(e) => {
                     e.preventDefault()

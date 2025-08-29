@@ -2,27 +2,40 @@ import { NavLink } from 'react-router-dom'
 import { logout } from '../utils/authenticate'
 import styled from 'styled-components'
 
+const StyledNav = styled.div`
+  background-color: rgb(255, 255, 255, 0.3);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 3rem;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+`
+
 const baseStyles = `
   font-family: inherit;
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: 700;
   text-decoration: none;
-  color: var(--background-color);
+  color: var(--primary-color);
   background-color: transparent;
   border: none;
-  padding: 2rem;
-  margin: 20px;
+  padding: 0.65rem 1.3rem;
   cursor: pointer;
 `
 
 const linkStyles =`
   &.active {
-    color: var(--primary-color);
-    background-color: var(--background-color);
+    color: var(--primary-color-dark);
+    font-size: 1.6rem;
   }
   &:hover {
-    color: var(--primary-color-dark);
-    background-color: var(--primary-color-light);
+    color: var(--background-color);
+    font-size: 1.6rem;
   }
 `
 
@@ -39,8 +52,8 @@ const StyledBridge = styled.a`
 const StyledButton = styled.button`
   ${baseStyles}
   &:hover {
-    color: var(--primary-color-dark);
-    background-color: var(--primary-color-light);
+    color: var(--background-color);
+    font-size: 1.6rem;
   }
 `
 
@@ -54,7 +67,7 @@ function Navbar({ user, onLogout }) {
   const AUTHOR_URL = import.meta.env.VITE_AUTHOR_URL
 
   return (
-    <nav>
+    <StyledNav>
       <div>
         <StyledLink to='/'>Home</StyledLink>
       </div>
@@ -84,7 +97,7 @@ function Navbar({ user, onLogout }) {
         </div>
       </>
       )}
-    </nav>
+    </StyledNav>
   )
 }
 

@@ -6,7 +6,7 @@ import Footer from './components/footer'
 import styled from 'styled-components'
 
 const Wrapper = styled.main`
-  margin-top: 8rem;
+  margin-top: 4rem;
 `
 
 function App() {

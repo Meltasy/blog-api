@@ -16,21 +16,17 @@ const InfoWrapper = styled.div`
   justify-content: space-between;
 `
 
-const Author = styled.p`
-  font-weight: 700;
-`
-
-const DateText = styled.p`
-  font-size: 0.8rem;
+const AuthorDateWrapper = styled.div`
+  font-size: 0.9rem;
   font-style: italic;
   font-weight: 700;
 `
 
 const ButtonsWrapper = styled.div`
   display: flex;
-  margin: 1rem 0;
   gap: 1rem;
   justify-content: flex-end;
+  align-items: center;
 `
 
 function BlogPost({ post, onSelect, togglePublish, deleteBlogPost, isPublishLoading, isLoading }) {
@@ -53,10 +49,9 @@ function BlogPost({ post, onSelect, togglePublish, deleteBlogPost, isPublishLoad
         <p>{post.content}</p>
       </div>
       <InfoWrapper>
-        <div>
-          <Author>{post.author.username}</Author>
-          <DateText>{formatDate(post.createdAt)}</DateText>
-        </div>
+        <AuthorDateWrapper>
+          <p>{post.author.username}, {formatDate(post.createdAt)}</p>
+        </AuthorDateWrapper>
         <ButtonsWrapper>
           <button className='button' onClick={togglePublish} disabled={isPublishLoading}>
             {isPublishLoading

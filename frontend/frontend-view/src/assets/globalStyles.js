@@ -12,10 +12,11 @@ const GlobalStyles = createGlobalStyle`
     --secondary-color: rgb(255, 158, 0);
     --secondary-color-light: rgb(255, 191, 87);
     --secondary-color-dark: rgb(162, 100, 0);
+    --headers-font: 'Lucida Console', 'Courier New', Courier, monospace;
   }
   
   body {
-    font-family: 'Lucida Console', 'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 16px;
     color: var(--text-color);
     background-image: url(${backgroundImage});
@@ -25,68 +26,39 @@ const GlobalStyles = createGlobalStyle`
     background-color: var(--background-color);
   }
 
-  nav,
-  footer {
-    background-color: rgb(255, 255, 255, 0.3);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    width: 100%;
-    margin: auto;
-    gap: 4rem;
-  }
-  
-  nav {
-    top: 0;
-    height: 100px;
-  }
-
-  footer {
-    color: var(--primary-color-dark);
-    font-weight: 700;
-    font-size: 1.2rem;
-    bottom: 0;
-    height: 50px;
-  }
-
-  footer a:link {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  footer a:hover,
-  footer a:visited {
-    color: var(--primary-color);
-  }
-
   header {
     margin-bottom: 1rem;
   }
 
   h1 {
-    font-size: 5rem;
-    color: var(--primary-color);
-    text-shadow: 5px 5px 5px var(--primary-color-light);
+    font-family: var(--headers-font);
+    font-size: 3rem;
+    color: var(--primary-color-dark);
+    text-shadow: 2px 2px 2px var(--primary-color);
     text-align: center;
     margin-bottom: 0;
   }
 
   h2 {
-    font-size: 3rem;
+    font-family: var(--headers-font);
+    font-size: 2.2rem;
     color: Var(--primary-color);
+    text-shadow: 2px 2px 2px var(--primary-color-light);
     text-align: center;
     margin: 0;
   }
 
   h3 {
-    font-size: 2rem;
+    font-family: var(--headers-font);
+    font-size: 1.6rem;
+    margin: 0.5rem 0;
   }
 
   h4 {
+    font-family: var(--headers-font);
     color: var(--secondary-color-light);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
   }
 
   ul {
@@ -99,7 +71,7 @@ const GlobalStyles = createGlobalStyle`
     box-shadow: 2px 2px 2px var(--primary-color-light);
     width: max-content;
     margin: auto;
-    padding: 2rem;
+    padding: 1rem 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -108,7 +80,6 @@ const GlobalStyles = createGlobalStyle`
 
   label {
     font-family: inherit;
-    font-size: 1.2rem;
     font-weight: 700;
     color: var(--background-color);
     margin-right: 1rem;
@@ -117,13 +88,11 @@ const GlobalStyles = createGlobalStyle`
   input,
   textarea {
     font-family: inherit;
-    font-size: 1.2rem;
     color: var(--background-color);
     background-color: var(--primary-color-dark);
-    box-shadow: 2px 2px 2px var(--background-color);
     border: none;
     outline: none;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem;
     min-width: 400px;
   }
 
@@ -133,19 +102,16 @@ const GlobalStyles = createGlobalStyle`
 
   .button {
     font-family: inherit;
-    font-size: 1.2rem;
     font-weight: 700;
     color: var(--background-color);
     background-color: var(--primary-color-dark);
-    box-shadow: 2px 2px 2px var(--background-color);
     border: none;
     outline: none;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem;
     cursor: pointer;
     &:hover {
       color: var(--primary-color-dark);
       background-color: var(--background-color);
-      box-shadow: 2px 2px 2px var(--primary-color-dark);
     }
   }
 

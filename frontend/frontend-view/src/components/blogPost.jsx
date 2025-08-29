@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const StyledItem = styled.li`
   width: 40rem;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   color: var(--background-color);
   background-color: var(--primary-color);
   box-shadow: 2px 2px 2px var(--primary-color-light);

@@ -12,6 +12,13 @@ const Content = styled.textarea`
   min-width: 600px;
 `
 
+const ExtrasWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`
+
 const LabelWrapper = styled.label`
   display: flex;
   gap: 0.5rem;
@@ -19,8 +26,8 @@ const LabelWrapper = styled.label`
 `
 
 const Checkbox = styled.input`
-  min-height: 25px;
-  min-width: 25px;
+  min-height: 18px;
+  min-width: 18px;
   cursor: pointer;
 `
 
@@ -125,21 +132,23 @@ function NewPost() {
           <div className='errorBox'>
             {errors.content && <div className='errors'>{errors.content}</div>}
           </div>
-          <LabelWrapper htmlFor='published'>
-            <Checkbox
-              id='published'
-              name='published'
-              type='checkbox'
-              checked={isPublished}
-              onChange={(e) => setIsPublished(e.target.checked)}
-            />
-            Publish immediately
-          </LabelWrapper>
-          <div className='buttonBox'>
-            <button className='button' type='submit' disabled={loading}>
-              {loading ? 'saving ...' : 'Save'}
-            </button>
-          </div>
+          <ExtrasWrapper>
+            <LabelWrapper htmlFor='published'>
+              <Checkbox
+                id='published'
+                name='published'
+                type='checkbox'
+                checked={isPublished}
+                onChange={(e) => setIsPublished(e.target.checked)}
+              />
+              Publish immediately
+            </LabelWrapper>
+            <div className='buttonBox'>
+              <button className='button' type='submit' disabled={loading}>
+                {loading ? 'saving ...' : 'Save'}
+              </button>
+            </div>
+          </ExtrasWrapper>
         </FormWrapper>
       </main>
     </>
