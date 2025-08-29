@@ -23,7 +23,7 @@ const GlobalStyles = createGlobalStyle`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    background-color: var(--background-color);
+    background-color: rgb(220, 86, 64);
   }
 
   header {
