@@ -10,9 +10,9 @@ This project solves these challenges by:
 * **Modern authentication:** JWT-based security with role-based access control
 * **Scalable architecture:** Modular design allowing independent scaling of components
 
-Check out my [blog-api](https://blog-api-view.netlify.app/)!
+Check out my [Blog App](https://blog-api-view.netlify.app/)!
 
-This blog-api project was built as part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api) curriculum.
+This project was built as part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api) curriculum.
 
 ***
 
