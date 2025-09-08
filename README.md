@@ -1,15 +1,15 @@
 # blog-api
 
-This project was built as part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api) curriculum.
-
 [![License ISC](https://img.shields.io/github/license/Meltasy/blog-api)](https://opensource.org/licenses/ISC)
 [![ECMAScript](https://img.shields.io/badge/ECMAScript-2025-blue.svg)](https://ecma-international.org/publications-and-standards/standards/ecma-262/)
 [![Node.js](https://img.shields.io/badge/Node.js-v22.12.0-brightgreen.svg)](https://nodejs.org/)
-[![npm](https://img.shields.io/badge/npm-v11.3.0-red.svg)(https://www.npmjs.com/)]
+[![npm](https://img.shields.io/badge/npm-v11.3.0-red.svg)](https://www.npmjs.com/)
 [![Repo Size](https://img.shields.io/github/repo-size/Meltasy/blog-api)](https://github.com/Meltasy/blog-api)
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://blog-api-view.netlify.app/)
 
 A blog platform with a backend API supporting a public site for readers and a private dashboard for authors.
+
+This project was built as part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api) curriculum.
 
 Check out my [Blog App](https://blog-api-view.netlify.app/)!
 
@@ -39,7 +39,7 @@ Check out my [Blog App](https://blog-api-view.netlify.app/)!
 * bcrypt for password hashing
 * CORS for cross-origin resource sharing
 
-### Frontend
+### Frontends
 
 * React 18 with modern hooks
 * Vite for fast development and building
