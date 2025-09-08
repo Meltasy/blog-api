@@ -1,49 +1,33 @@
 # blog-api
 
-[![Node.js version](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Node.js Version](https://img.shields.io/badge/node-20%20%7C%2022-brightgreen)](https://nodejs.org/)
+This project was built as part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api) curriculum.
+
 [![License ISC](https://img.shields.io/github/license/Meltasy/blog-api)](https://opensource.org/licenses/ISC)
+[![ECMAScript](https://img.shields.io/badge/ECMAScript-2025-blue.svg)](https://ecma-international.org/publications-and-standards/standards/ecma-262/)
+[![Node.js](https://img.shields.io/badge/Node.js-v22.12.0-brightgreen.svg)](https://nodejs.org/)
+[![npm](https://img.shields.io/badge/npm-v11.3.0-red.svg)(https://www.npmjs.com/)]
+[![Repo Size](https://img.shields.io/github/repo-size/Meltasy/blog-api)](https://github.com/Meltasy/blog-api)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://blog-api-view.netlify.app/)
 
-Traditional blog platforms often tightly couple the content management system with the public-facing blog, creating security vulnerabilities and limiting flexibility. Content creators need separate, secure environments for writing and publishing content compared to reading and commenting on it, while maintaining a unified backend that serves both interfaces efficiently.
-
-This project solves these challenges by:
-
-* **Separating concerns:** Distinct frontends for content creation vs. content 
-* **Enhanced security:** Protected admin interface isolated from public blog
-* **API-first approach:** Flexible backend that can serve multiple clients
-* **Modern authentication:** JWT-based security with role-based access control
-* **Scalable architecture:** Modular design allowing independent scaling of components
+A blog platform with a backend API supporting a public site for readers and a private dashboard for authors.
 
 Check out my [Blog App](https://blog-api-view.netlify.app/)!
 
-This project was built as part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-nodejs-blog-api) curriculum.
-
-***
-
 ## Features
 
-### Backend API
+* 🎎 **Dual-purpose design:** Clean Separation between content creation dashboard and public blog
+* 🔐 **Smart access control:** Role-based permissions keep admin functions secure from readers
+* 📝 **Full content lifecycle:** Draft, edit, publish and manage posts with complete workflow control
+* 💬 **Engaging comment system:** User accounts, threaded discussions, and self-managed comments
+* 🧩 **Scalable architecture:** Modular components that grow independently as needed
+* 📢 **Live updates:** Real-time content sync keeps everything fresh and responsive
+* 🔒 **Enhanced security:** Protected routes and authenticated sessions throughout
 
-* RESTful API built with Express.js and Prisma ORM
-* JWT Authentication for secure user sessions
-* Role-based access control (Authors vs. Readers)
-* Draft/Published post management
-* Comment system with user ownership
-* Protected routes for content management
+## Future Improvements
 
-### Reader Frontend
-
-* Public blog interface for viewing content
-* User registration/login for commenting
-* Comment management (edit/delete own comments)
-* Real-time content updates
-
-### Author Frontend
-
-* Admin dashboard for content creators
-* Draft management with publish/unpublish controls
-* Comment moderation (manage all comments)
-* Post management tools (create/edit/delete posts)
+* Rich text editor for posts
+* Image uploads for posts
+* Post analytics for author
 
 ## Tech Stack
 
@@ -62,7 +46,9 @@ This project was built as part of [The Odin Project](https://www.theodinproject.
 * React Router for client-side routing
 * CSS in JS for styling
 
-## Installation
+## Local Installation
+
+Prerequisite: Node.js v22.19.0
 
 1. Clone the repository: `git clone git@github.com:Meltasy/blog-api.git` and `cd blog-api`
 2. Set up the backend: `cd backend` and `npm install`
@@ -70,16 +56,17 @@ This project was built as part of [The Odin Project](https://www.theodinproject.
     * `DATABASE_PUBLIC_URL="your-database-url"`
     * `JWT_SECRET="your-secret-key"`
     * `AUTHOR_PASSCODE="your-author-passcode"`
+    * `PORT="your-backend-port"`
 4. Set up the database: `npx prisma migrate dev`
-5. Start the backend server: `npm run dev`
-6. Set up the reader frontend: `cd ../frontend-view` and `npm install` and `npm run dev`
-7. Set up the author frontend: `cd ../frontend-author` and `npm install` and `npm run dev`
-
-## Future Improvements
-
-* Rich text editor for posts
-* Image uploads for posts
-* Post analytics for author
+5. Set up the reader frontend: `cd ../frontend-view` and `npm install`
+6. Configure environment variable with an `.env` file in the root directory:
+    * `VITE_API_URL="your-backend-port"`
+    * `VITE_AUTHOR_URL="your-frontend-author-port"`
+7. Set up the author frontend: `cd ../frontend-author` and `npm install`
+8. Configure environment variable with an `.env` file in the root directory:
+    * `VITE_API_URL="your-backend-port"`
+    * `VITE_VIEW_URL="your-frontend-view-port"`
+9. Start the backend and both frontend servers: `npm run dev`
 
 ## License
 
