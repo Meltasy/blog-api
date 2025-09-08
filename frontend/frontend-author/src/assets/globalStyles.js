@@ -1,7 +1,29 @@
 import { createGlobalStyle } from 'styled-components'
 import backgroundImage from './forbidden-city.jpg'
+import exoRegularWoff from './fonts/exo-regular-webfont.woff'
+import exoRegularWoff2 from './fonts/exo-regular-webfont.woff2'
+import exoMediumWoff from './fonts/exo-medium-webfont.woff'
+import exoMediumWoff2 from './fonts/exo-medium-webfont.woff2'
 
 const GlobalStyles = createGlobalStyle`
+  @font-face {
+    font-family: 'exo-regular';
+    src:
+      url(${exoRegularWoff2}) format('woff2'),
+      url(${exoRegularWoff}) format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'exo-medium';
+    src:
+      url(${exoMediumWoff2}) format('woff2'),
+      url(${exoMediumWoff}) format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
   :root {
     --text-color: rgb(0, 7, 16);
     --error-text-color: rgb(101, 3, 3);
@@ -9,15 +31,16 @@ const GlobalStyles = createGlobalStyle`
     --primary-color: rgb(14, 83, 171);
     --primary-color-light: rgb(76, 126, 191);
     --primary-color-dark: rgb(7, 50, 106);
-    --secondary-color: rgb(255, 158, 0);
-    --secondary-color-light: rgb(255, 191, 87);
-    --secondary-color-dark: rgb(162, 100, 0);
-    --headers-font: 'Lucida Console', 'Courier New', Courier, monospace;
+    --secondary-color: rgb(224, 113, 72);
+    --secondary-color-light: rgb(255, 196, 174);
+    --secondary-color-dark: rgb(182, 62, 19);
   }
   
   body {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'exo-regular', 'Courier New', Courier, monospace;
     font-size: 16px;
+    letter-spacing: 0.1rem;
+    line-height: 1.6;
     color: var(--text-color);
     background-image: url(${backgroundImage});
     background-repeat: no-repeat;
@@ -30,8 +53,12 @@ const GlobalStyles = createGlobalStyle`
     margin-bottom: 1rem;
   }
 
+  h1, h2, h3, h4 {
+    font-family: 'exo-medium', 'Courier New', Courier, monospace;
+    letter-spacing: 0.15rem;
+  }
+
   h1 {
-    font-family: var(--headers-font);
     font-size: 3rem;
     color: var(--primary-color-dark);
     text-shadow: 2px 2px 2px var(--primary-color);
@@ -40,7 +67,6 @@ const GlobalStyles = createGlobalStyle`
   }
 
   h2 {
-    font-family: var(--headers-font);
     font-size: 2.2rem;
     color: Var(--primary-color);
     text-shadow: 2px 2px 2px var(--primary-color-light);
@@ -49,13 +75,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   h3 {
-    font-family: var(--headers-font);
     font-size: 1.6rem;
     margin: 0.5rem 0;
   }
 
   h4 {
-    font-family: var(--headers-font);
     color: var(--secondary-color-light);
     font-size: 1.2rem;
     margin: 0.5rem 0;
@@ -81,6 +105,7 @@ const GlobalStyles = createGlobalStyle`
   label {
     font-family: inherit;
     font-weight: 700;
+    letter-spacing: 0.1rem;
     color: var(--background-color);
     margin-right: 1rem;
   }
@@ -88,6 +113,8 @@ const GlobalStyles = createGlobalStyle`
   input,
   textarea {
     font-family: inherit;
+    letter-spacing: 0.1rem;
+    line-height: 1.6;
     color: var(--background-color);
     background-color: var(--primary-color-dark);
     border: none;
@@ -103,6 +130,7 @@ const GlobalStyles = createGlobalStyle`
   .button {
     font-family: inherit;
     font-weight: 700;
+    letter-spacing: 0.1rem;
     color: var(--background-color);
     background-color: var(--primary-color-dark);
     border: none;
