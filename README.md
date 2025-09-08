@@ -1,5 +1,9 @@
 # blog-api
 
+[![Node.js version](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Node.js Version](https://img.shields.io/badge/node-20%20%7C%2022-brightgreen)](https://nodejs.org/)
+[![License ISC](https://img.shields.io/github/license/Meltasy/blog-api)](https://opensource.org/licenses/ISC)
+
 Traditional blog platforms often tightly couple the content management system with the public-facing blog, creating security vulnerabilities and limiting flexibility. Content creators need separate, secure environments for writing and publishing content compared to reading and commenting on it, while maintaining a unified backend that serves both interfaces efficiently.
 
 This project solves these challenges by:
